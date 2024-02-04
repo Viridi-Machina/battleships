@@ -110,4 +110,22 @@ def validate_guess():
 
     print(guess.upper())
 
-validate_guess()
+def guess_conversion():
+    '''
+    This function converts the user's validated guess into an integer.
+    
+    First by obtaining the ordinal value or the given letter and
+    combining it with the number as a string, before finally 
+    converting into an integer.
+    '''
+    guess = 'C9'
+    ordinal = ord(guess[0]) - 64
+    
+    if guess[1:] == '10':
+        converted_guess = ordinal * 10
+    else:
+        converted_guess = int(f'{ordinal}{guess[1:]}')
+    print(converted_guess)
+    
+
+guess_conversion()
