@@ -91,6 +91,7 @@ def validate_guess():
 
     grid_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     grid_numbers = ['1','2','3','4','5','6','7','8','9','10']
+    guesses = ['D8', 'B9', 'C9', 'D9']
 
     valid = 0
     while valid == 0:
@@ -102,6 +103,8 @@ def validate_guess():
                 print('The first co-ordinate must be a letter A-J.')
             elif guess[1:] not in grid_numbers:
                 print('Second co-ordinate must be a number 1-10.')
+            elif guess.upper() in guesses:
+                print('Co-ordinate already targeted, please try again.')
             else:
                 valid = 1
                 break
@@ -128,4 +131,4 @@ def guess_conversion():
     print(converted_guess)
     
 
-guess_conversion()
+validate_guess()
