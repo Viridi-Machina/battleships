@@ -97,32 +97,37 @@ def validate_guess():
     while valid == 0:
         try:
             user_guess = input('Select a co-ordinate to launch a missile: \n')
-            guess = user_guess.strip()
+            guess = user_guess.upper().strip()
             if str.isalpha(guess[0]) == False:
                 print('First co-ordinate must be a letter A-J.')
             elif guess[0].upper() not in grid_letters:
                 print('The first co-ordinate must be a letter A-J.')
             elif guess[1:] not in grid_numbers:
                 print('Second co-ordinate must be a number 1-10.')
-            elif guess.upper() in guesses:
-                print('Co-ordinate already targeted, please try again.')
+            elif guess in guesses:
+                print('Grid location already fired upon, please select a new target.')
             else:
                 valid = 1
                 break
         except:
             print('Incorrect input, please try a new co-ordinate.\nFor example "D7"')
 
-    print(guess.upper())
+    print(f'\nDialing in on {guess}.\nLaunching missile...')
+    return guess
 
-def guess_conversion():
+def guess_conversion(guess):
     '''
-    This function converts the user's validated guess into an integer.
+    This function converts the user's validated guess into an integer
+    between 11-110 so that it can be used on the grid.
     
-    First by obtaining the ordinal value or the given letter and
-    combining it with the number as a string, before finally 
+    The functions obtains the ordinal value or the given letter and
+    combines it with the number via string concatenation, before 
     converting into an integer.
+
+    If the second co-ordinate is 10, then the ordinal value of the letter
+    is multiplied by 10 as string concatenation would not work.
     '''
-    guess = 'C9'
+
     ordinal = ord(guess[0]) - 64
     
     if guess[1:] == '10':
@@ -132,4 +137,4 @@ def guess_conversion():
     print(converted_guess)
     
 
-validate_guess()
+guess_conversion(validate_guess())
