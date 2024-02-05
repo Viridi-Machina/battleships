@@ -74,11 +74,8 @@ def display_grid(hits,misses):
     # Forms grid bottom
     print(f'  {bl_corner}{line_x}{br_corner}\n     1  2  3  4  5  6  7  8  9  10\n')
 
-hits = [11,21,31]
-misses = [13,14,15,23,54,52,51,34,32]
-display_grid(hits,misses)
 
-def validate_guess():
+def validate_guess(guesses):
     '''
     This function validates that the user's guess is between A1 and J10
     and has not already been used.
@@ -91,7 +88,7 @@ def validate_guess():
 
     grid_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     grid_numbers = ['1','2','3','4','5','6','7','8','9','10']
-    guesses = ['D8', 'B9', 'C9', 'D9']
+    #guesses = ['D8', 'B9', 'C9', 'D9']
 
     valid = 0
     while valid == 0:
@@ -115,6 +112,7 @@ def validate_guess():
     print(f'\nDialing in on {guess}.\nLaunching missile...')
     return guess
 
+
 def guess_conversion(guess):
     '''
     This function converts the user's validated guess into an integer
@@ -134,7 +132,41 @@ def guess_conversion(guess):
         converted_guess = ordinal * 10
     else:
         converted_guess = int(f'{ordinal}{guess[1:]}')
-    print(converted_guess)
+    return converted_guess
     
 
-guess_conversion(validate_guess())
+def hit_or_miss(guess, guesses, ship_1, hits, misses, ship_sunk):
+    '''
+    This function determines whether a guess results in a hit or a miss.
+    '''
+    if guess_conversion(guess) in ship_1:
+        hits.append(guess_conversion(guess))
+        ship_sunk_check = [i in hits for i in ship_1]
+
+        if all(ship_sunk_check):
+            ship_sunk = ship_1
+            ship_1 = []
+            
+    else:
+        misses.append(guess_conversion(guess))
+    
+    guesses.append(guess)
+    print(f'Guesses: {guesses}')
+    print(f'Hits: {hits}')
+    print(f'Misses: {misses}')
+    print(f'Ship 1: {ship_1}')
+    print(ship_sunk)
+    return guesses, ship_1, hits, misses, ship_sunk
+
+
+ship_1 = [34,44,54]
+hits = []
+misses = []
+guesses = []
+ship_sunk = []
+
+for i in range(5):
+    guess = validate_guess(guesses)
+    guess_conversion(guess)
+    guesses, ship_1, hits, misses, ship_sunk = hit_or_miss(guess, guesses, ship_1, hits, misses, ship_sunk)
+    display_grid(hits, misses)
