@@ -38,11 +38,12 @@ bl_corner = '\u2517'
     # The string is ended with {Fore.WHITE} so that the rest 
     # of the display remains unchanged.
 
-grid = '\U0001F785  ' # Circle unicode character with space
+grid = '\U0001F785  ' # Circle unicode character with space U0001F785
 hit = '\U0001F7D2  '  # Star unicode character to indicate hit
 miss = '\U0001F7AC  ' # Cross unicode character to indicate miss
+sunk = '\u23FA  ' # Solid circle unicode character to indicate sunken ship
 
-def display_grid(hits,misses):
+def display_grid(hits, misses, ship_sunk):
     '''
     This function displays the updated grid for the player; 
     showing any hits and misses on the board.
@@ -55,7 +56,6 @@ def display_grid(hits,misses):
     # Forms grid top
     print(f'\n  {tl_corner}{line_x}{tr_corner}')
     grid_letters = ['A','B','C','D','E','F','G','H','I','J']
-    # grid_numbers = [1,2,3,4,5,6,7,8,9,10]
 
     # Forms grid body
     grid_location = 11 # Starts at 11 as the grid numbering starts from 1,1 (A1)
@@ -67,6 +67,8 @@ def display_grid(hits,misses):
                 grid_element = miss
             elif grid_location in hits:
                 grid_element = hit
+            elif grid_location in ship_sunk:
+                grid_element = sunk
             grid_row = grid_row + grid_element
             grid_location = grid_location + 1
         print(grid_letters[x], line_y, grid_row, line_y)
@@ -146,6 +148,7 @@ def hit_or_miss(guess, guesses, ship_1, hits, misses, ship_sunk):
         if all(ship_sunk_check):
             ship_sunk = ship_1
             ship_1 = []
+            hits = [i for i in hits if i not in ship_sunk]
             
     else:
         misses.append(guess_conversion(guess))
@@ -169,4 +172,4 @@ for i in range(5):
     guess = validate_guess(guesses)
     guess_conversion(guess)
     guesses, ship_1, hits, misses, ship_sunk = hit_or_miss(guess, guesses, ship_1, hits, misses, ship_sunk)
-    display_grid(hits, misses)
+    display_grid(hits, misses, ship_sunk)
