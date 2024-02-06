@@ -131,7 +131,7 @@ def guess_conversion(guess):
     ordinal = ord(guess[0]) - 64
     
     if guess[1:] == '10':
-        converted_guess = ordinal * 10
+        converted_guess = (ordinal + 1) * 10
     else:
         converted_guess = int(f'{ordinal}{guess[1:]}')
     return converted_guess
@@ -166,6 +166,10 @@ def hit_or_miss(guess, guesses, ship_1, hits, misses, ship_sunk):
     print(ship_sunk)
     return guesses, ship_1, hits, misses, ship_sunk
 
+
+class Player:
+    def __init__(self, ):
+        pass
 
 ship_1 = [34,44,54]
 hits = []
