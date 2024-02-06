@@ -140,6 +140,11 @@ def guess_conversion(guess):
 def hit_or_miss(guess, guesses, ship_1, hits, misses, ship_sunk):
     '''
     This function determines whether a guess results in a hit or a miss.
+
+    List comprehension is used to compare whether a ship's entire list
+    is contained within the 'hits' list. If True then the ship is
+    returned empty and the hits are replaced with the 'ship_sunk' list
+    to show a new character on the displayed grid.
     '''
     if guess_conversion(guess) in ship_1:
         hits.append(guess_conversion(guess))
@@ -173,3 +178,7 @@ for i in range(5):
     guess_conversion(guess)
     guesses, ship_1, hits, misses, ship_sunk = hit_or_miss(guess, guesses, ship_1, hits, misses, ship_sunk)
     display_grid(hits, misses, ship_sunk)
+
+    if len(ship_1) < 1:
+        print('You sunk all the enemy ships, you win the game!')
+        break
