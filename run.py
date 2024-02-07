@@ -19,6 +19,7 @@
 # Track score and save user email for login, store score and user information on external sheet
 # With enough time, allow import from external sheet (with link for users) to import ship placement
 
+from typing import Any
 from colorama import Fore, Style
 
 # Default grid-size; future implementation to alter based on user choice
@@ -137,7 +138,7 @@ def guess_conversion(guess):
     return converted_guess
     
 
-def hit_or_miss(guess, guesses, ship_1, hits, misses, ship_sunk):
+def hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player):
     '''
     This function determines whether a guess results in a hit or a miss.
 
@@ -146,43 +147,51 @@ def hit_or_miss(guess, guesses, ship_1, hits, misses, ship_sunk):
     returned empty and the hits are replaced with the 'ship_sunk' list
     to show a new character on the displayed grid.
     '''
-    if guess_conversion(guess) in ship_1:
-        hits.append(guess_conversion(guess))
-        ship_sunk_check = [i in hits for i in ship_1]
+    miss = 1
+    for key, ship in ships_player.items():
+        if guess_conversion(guess) in ship:
+            hits.append(guess_conversion(guess))
+            ship_sunk_check = [i in hits for i in ship]
+            miss = 0
 
-        if all(ship_sunk_check):
-            ship_sunk = ship_1
-            ship_1 = []
-            hits = [i for i in hits if i not in ship_sunk]
-            
-    else:
+            if all(ship_sunk_check):
+                ship_sunk.extend(ship)
+                ship = []
+                hits = [i for i in hits if i not in ship_sunk]
+                miss = 0
+                print(f'You sunk my {key.upper()}!')
+
+    if miss == 1:
         misses.append(guess_conversion(guess))
     
     guesses.append(guess)
     print(f'Guesses: {guesses}')
     print(f'Hits: {hits}')
     print(f'Misses: {misses}')
-    print(f'Ship 1: {ship_1}')
     print(ship_sunk)
-    return guesses, ship_1, hits, misses, ship_sunk
+    return guesses, ships_player, hits, misses, ship_sunk
+
+# Stores all ships on the board in a dictionary for reference
+ships_player = {
+    'cruiser': [92,93],
+    'submarine': [110,100,90],
+    'destroyer': [58,68,78],
+    'battleship': [12,13,14,15],
+    'aircraft_carrier': [21,22,23,24,25]
+}
 
 
-class Player:
-    def __init__(self, ):
-        pass
-
-ship_1 = [34,44,54]
 hits = []
 misses = []
 guesses = []
 ship_sunk = []
 
-for i in range(5):
+for i in range(20):
     guess = validate_guess(guesses)
     guess_conversion(guess)
-    guesses, ship_1, hits, misses, ship_sunk = hit_or_miss(guess, guesses, ship_1, hits, misses, ship_sunk)
+    guesses, ships_player, hits, misses, ship_sunk = hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player)
     display_grid(hits, misses, ship_sunk)
 
-    if len(ship_1) < 1:
+    if len(ships_player) < 1:
         print('You sunk all the enemy ships, you win the game!')
         break
