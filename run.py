@@ -165,10 +165,8 @@ def hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player):
         misses.append(guess_conversion(guess))
     
     guesses.append(guess)
-    print(f'Guesses: {guesses}')
-    print(f'Hits: {hits}')
-    print(f'Misses: {misses}')
-    print(ship_sunk)
+    print(f'Guesses: {len(guesses)}')
+    
     return guesses, ships_player, hits, misses, ship_sunk
 
 # Stores all ships on the board in a dictionary for reference
@@ -192,6 +190,6 @@ for i in range(20):
     guesses, ships_player, hits, misses, ship_sunk = hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player)
     display_grid(hits, misses, ship_sunk)
 
-    if len(ships_player) < 1:
+    if len(ship_sunk) == 17:
         print('You sunk all the enemy ships, you win the game!')
         break
