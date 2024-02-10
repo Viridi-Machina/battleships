@@ -30,9 +30,9 @@ bl_corner = '\u2517'
     # The string is ended with {Fore.WHITE} so that the rest 
     # of the display remains unchanged.
 
-grid = '\U0001F785  ' # Circle unicode character with space U0001F785
+grid = f'{Fore.RED}\U0001F785 {Fore.WHITE}' # Circle unicode character with space U0001F785
 hit = '\U0001F7D2  '  # Star unicode character to indicate hit
-miss = '\U0001F7AC  ' # Cross unicode character to indicate miss
+miss = '\U0001F7AC ' # Cross unicode character to indicate miss
 sunk = '\u23FA  ' # Solid circle unicode character to indicate sunken ship
 
 def display_grid(hits, misses, ship_sunk):

@@ -6,7 +6,7 @@ import math
 
 
 
-def validate_placement(ship, start, direction, **ships_cpu):
+def validate_placement(ship, start, direction, in_use):
     '''
     This function uses the randomly generated starting points and directions 
     for each ship to determine grid co-ordinates for each ship in the
@@ -20,32 +20,36 @@ def validate_placement(ship, start, direction, **ships_cpu):
     '+/- i*10' adds a co-ordinate vertically.
     '''
     
-    for x in ships_cpu.values():
+    x = [ship]
+    if direction == 1:
+        for i in range(math.floor(ship)):
+            x.append(start + i)
+        x = ship_valid(x, in_use)
+    elif direction == 2:
+        for i in range(math.floor(ship)):
+            x.append(start + i*10)
+        x = ship_valid(x, in_use)
+    return x
 
-        if direction == 1:
-            if ship == x[0]:
-                for i in range(math.floor(ship)):
-                    x.append(start - i*10)
-                x.remove(x[0])
-
-        elif direction == 2:
-            if ship == x[0]:
-                for i in range(math.floor(ship)):
-                    x.append(start + i)
-                x.remove(x[0])
-
-        elif direction == 3:
-            if ship == x[0]:
-                for i in range(math.floor(ship)):
-                    x.append(start + i*10)
-                x.remove(x[0])
-
-        elif direction == 4:
-            if ship == x[0]:
-                for i in range(math.floor(ship)):
-                    x.append(start - i*10)
-                x.remove(x[0])
-
+def ship_valid(x, in_use):
+    '''
+    This helper function is a final validator to ensure that the assigned
+    ship co-ordinates are 'legal'. I.e no overlapping, spreading from one 
+    side of the grid to the other or placing outside the grid scope.
+    '''
+    for i in range(len(x)):
+        co_ord = x[i]
+        if co_ord in in_use:
+            x = [-1]
+            break
+        if co_ord > 110:
+            x = [-1]
+            break
+        elif co_ord % 10 == 0 and i < len(x)-1:
+            if x[i+1] % 10 == 1:
+                x = [-1]
+                break
+    return x
 
 
       
@@ -56,7 +60,8 @@ ships_cpu = {
     'battleship': [4.0],
     'aircraft_carrier': [5.0]
 }
-def cpu_placement():
+
+def cpu_creation(**ships_cpu):
     '''
     This function uses random number generation to assign assign co-ordinates
     for the computer's ships on the grid. It returns a dictionary which is
@@ -67,16 +72,32 @@ def cpu_placement():
     This stops the validate_placement() function from overwriting the 
     'destroyer' value with that of the 'submarine'.
 
-    The directions 1-4 are equal to up, right, down and left respectively.
+    The directions 1 & 2 are equal to right & down respectively.
     '''
-    computer_ships = [2.0, 3.0, 3.1, 4.0, 5.0]
-    for ship in computer_ships:
-        ship_start_grid = randrange(11, 110)
-        ship_direction = randrange(1,5)
+    in_use = []
+    computer_ships = []
+    ship_index = [2.0, 3.0, 3.1, 4.0, 5.0]
+    
+    for ship in ship_index:
+        x = [-1]
+        while x[0] == -1:
+            ship_start_grid = randrange(11, 110)
+            ship_direction = randrange(1,3)
 
-        validate_placement(ship, ship_start_grid, ship_direction, **ships_cpu)
-    print(ships_cpu)
+            x = validate_placement(ship, ship_start_grid, ship_direction, in_use)
+            
+        
+        computer_ships.append(x)
+        in_use = in_use + x
 
-cpu_placement()
-# for x in ships_cpu.values():
-#     print(x)
+    for list in ships_cpu.values():
+        for ship in computer_ships:
+            if ship[0] == list[0]:
+                list.remove(list[0])
+                ship.remove(ship[0])
+                list.extend(ship)
+
+    return ships_cpu
+
+cpu_creation(**ships_cpu)
+print(ships_cpu)
