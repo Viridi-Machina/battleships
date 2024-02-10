@@ -13,6 +13,8 @@
 from typing import Any
 from colorama import Fore, Style
 
+from computer import *
+
 # Default grid-size; future implementation to alter based on user choice
 grid_size = 10 
 

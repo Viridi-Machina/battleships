@@ -5,21 +5,26 @@ from random import randrange
 import math
 
 
+ships_cpu = {
+    'cruiser': [2.0],
+    'submarine': [3.0],
+    'destroyer': [3.1],
+    'battleship': [4.0],
+    'aircraft_carrier': [5.0]
+}
+
 
 def validate_placement(ship, start, direction, in_use):
     '''
     This function uses the randomly generated starting points and directions 
-    for each ship to determine grid co-ordinates for each ship in the
-    dictionary, before returning that dictionary for use in the game loop.
+    for each ship to determine their grid co-ordinates.
 
-    With how each dictionary value is used first as a comparitor with the 
-    ship argument, new values are appended first rather than redefining an
-    empty list. Then the first element of each list is removed.
+    A helper function ship_valid() checks whether new co-ordinates are legal
+    and returns the ship (x) as [-1] to continue the cpu_creation loop.
 
-    '+/- i' adds a co-ordinate horizontally.
-    '+/- i*10' adds a co-ordinate vertically.
+    '+ i' adds a co-ordinate horizontally.
+    '+ i*10' adds a co-ordinate vertically.
     '''
-    
     x = [ship]
     if direction == 1:
         for i in range(math.floor(ship)):
@@ -31,11 +36,15 @@ def validate_placement(ship, start, direction, in_use):
         x = ship_valid(x, in_use)
     return x
 
+
 def ship_valid(x, in_use):
     '''
-    This helper function is a final validator to ensure that the assigned
-    ship co-ordinates are 'legal'. I.e no overlapping, spreading from one 
-    side of the grid to the other or placing outside the grid scope.
+    This helper function validates whether the assigned ship co-ordinates are
+    'legal', specifically checking if any co-ordinates are:
+
+    - Already used by another ship
+    - Outside the grid scope
+    - Finishing on another row
     '''
     for i in range(len(x)):
         co_ord = x[i]
@@ -52,27 +61,22 @@ def ship_valid(x, in_use):
     return x
 
 
-      
-ships_cpu = {
-    'cruiser': [2.0],
-    'submarine': [3.0],
-    'destroyer': [3.1],
-    'battleship': [4.0],
-    'aircraft_carrier': [5.0]
-}
-
 def cpu_creation(**ships_cpu):
     '''
     This function uses random number generation to assign assign co-ordinates
-    for the computer's ships on the grid. It returns a dictionary which is
-    used for the hit_or_miss() function during the game loop.
+    for the computer's ships on the grid. 
+    
+    Each ship is created through a loop 
+    and is stored in both [computer_ships] and [in_use] (for validation).
+    Then the dictionary is returned with the new ships for the hit_or_miss() 
+    function during the main game loop.
 
     Floats are used to identify the different key-values in the ships_cpu
     dictionary as two keys would otherwise both have a value of [3].
     This stops the validate_placement() function from overwriting the 
     'destroyer' value with that of the 'submarine'.
 
-    The directions 1 & 2 are equal to right & down respectively.
+    The directions '1' & '2' are equivalent to 'right' & 'down' respectively.
     '''
     in_use = []
     computer_ships = []
