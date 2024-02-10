@@ -104,4 +104,3 @@ def cpu_creation(**ships_cpu):
     return ships_cpu
 
 cpu_creation(**ships_cpu)
-print(ships_cpu)
