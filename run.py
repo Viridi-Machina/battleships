@@ -2,55 +2,19 @@
 # With enough time, allow import from external sheet (with link for users) to import ship placement
 
 from typing import Any
-from colorama import Fore, Style
 
+from grid import *
 from computer import *
 from player import *
-
-# Default grid-size; future implementation to alter based on user choice
-grid_size = 10 
-
-# Unicode characters used for border styling.
-# Grid border pieces:
-l_y = '\u2503'                      # Vertical border
-l_x = '\u2501'*(3*grid_size + 3)    # Horizontal border
-tlc = '\u250F'                      # Top-left corner piece
-trc = '\u2513'                      # Top-right corner piece
-brc = '\u251B'                      # Bottom-right corner piece
-blc = '\u2517'                      # Bottom-left corner piece
-
-    # colorama-imported colours are used to distinguish hits 
-    # and misses from the board.
-    # The string is ended with {Fore.WHITE} so that the rest 
-    # of the display remains unchanged.
-
-# Grid construction elements
-spacer = ' '                        # String divider that adds empty space on the CLI display
-grid = f'\U0001F785{spacer*2}'      # Circle unicode character with space U0001F785
-hit = f'\U0001F7D2{spacer*2}'       # Star unicode character to indicate hit
-miss = f'\U0001F7AC{spacer*2}'      # Cross unicode character to indicate miss
-sunk = f'\u2B24{spacer*2}'          # Solid circle unicode character to indicate sunken ship
-
-grid_y = ['A','B','C','D','E','F','G','H','I','J']
-
-grid_title_player = f'\n{spacer*13}PLAYER GRID'
-grid_title_both = f'\n{spacer*13}PLAYER GRID{spacer*31}ENEMY GRID'
-
-grid_top_player = f'\n{spacer*2}{tlc}{l_x}{trc}'
-grid_top_both = f'\n{spacer*2}{tlc}{l_x}{trc}{spacer*7}{tlc}{l_x}{trc}'
-
-grid_bottom = f'{spacer*2}{blc}{l_x}{brc}'
-
-grid_numbers = spacer*3 + ''.join(f'{spacer*2}{i}' for i in range(1,11))
 
 
 def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2, **player):
     '''
-    This function displays the updated grid for the player; 
-    showing any hits and misses on the board.
+    This function displays the updated grid for the player and the opponent;
+    showing any hits and misses on the board, as well as the player's ships.
 
-    Two for loops create a grid that scales based on the defined 
-    grid_size variable. This is repeated for the opponent.
+    Two for loops create a grid that scales based on the defined grid_size 
+    variable. This is repeated for the opponent's grid.
     Adapted from a python code tutorial video-series from 
     'Dr Codie' on YouTube: https://www.youtube.com/@DrCodie
     '''
@@ -59,7 +23,9 @@ def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2, **player):
     print(grid_top_both)
     
     # Forms grid bodies for both the player and the opponents's grid.
-    grid_location = 11 # Starts at 11 as the grid numbering starts from 1,1 (A1)
+    # grid_location starts at 11 as the grid numbering starts from 1,1 (A1)
+    # The player grid has an added for loop to display all their ships.
+    grid_location = 11 
     grid_location_2 = 11
     for y in range(grid_size):
         grid_row = ''
@@ -76,7 +42,7 @@ def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2, **player):
                 grid_element = sunk
             grid_row = grid_row + grid_element
             grid_location = grid_location + 1
-        row = f'{l_y}{spacer*2}{grid_row}{spacer}{l_y}'
+        row = f'{vertical}{spacer*2}{grid_row}{spacer}{vertical}'
 
         grid_row_2 = ''
         for j in range(grid_size):
@@ -86,15 +52,15 @@ def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2, **player):
             elif grid_location_2 in hits_2:
                 grid_element_2 = hit
             elif grid_location_2 in s_sunk_2:
-                grid_element_2 = sunk
+                grid_element_2 = sunk_2
             grid_row_2 = grid_row_2 + grid_element_2
             grid_location_2 = grid_location_2 + 1
-        row_2 = f'{l_y}{spacer*2}{grid_row_2}{spacer}{l_y}'
+        row_2 = f'{vertical_2}{spacer*2}{grid_row_2}{spacer}{vertical_2}'
 
         print(grid_y[y], row, spacer*3, grid_y[y], row_2)
 
     # Forms grid bottom
-    print(grid_bottom, spacer*3, grid_bottom)
+    print(grid_bottom_both)
     print(grid_numbers, spacer*6, grid_numbers, '\n'*2)
 
 
@@ -210,9 +176,7 @@ guesses_2 = []
 ship_sunk_2 = []
 computer = hits_2, misses_2, ship_sunk_2
 
-# display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2)
-
-player_creation()
+display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2)
 
 cpu_creation(**ships_cpu)
 
