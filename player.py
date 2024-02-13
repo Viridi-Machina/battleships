@@ -21,13 +21,12 @@ def player_creation():
             
             
             
-            # while confirm == 'N':
-            #     cpu_creation(**ships_player)
-            #     for value in ships_player.values():
-            #         ship_sunk.extend(value)
-            #     display_grid(hits, misses, ship_sunk)
-            #     choice_2 = input('Confirm layout? Y / N\n')
-            #     confirm = choice_2.upper().strip()
+        if choice == 'N':
+            cpu_creation(**ships_player)
+            for value in ships_player.values():
+                ship_sunk.extend(value)
+            display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2, **ships_player)
+           
 
                             
 
@@ -46,6 +45,3 @@ def player_creation():
             #     break
     except:
         print('Incorrect input, please try a new co-ordinate.\nFor example "D7"')
-
-
-player_creation()

@@ -102,5 +102,3 @@ def cpu_creation(**ships_cpu):
                 list.extend(ship)
 
     return ships_cpu
-
-#cpu_creation(**ships_cpu)

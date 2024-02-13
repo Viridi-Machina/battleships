@@ -1,12 +1,3 @@
-# FUNCTION Launch Game
-# Welcome Screen
-# INPUT Enter UserName
-# Store UserName
-# SELECT BOARD SIZE
-# Show Board
-# SELECT SHIP PLACEMENT
-# Show Board
-
 # Track score and save user email for login, store score and user information on external sheet
 # With enough time, allow import from external sheet (with link for users) to import ship placement
 
@@ -14,6 +5,7 @@ from typing import Any
 from colorama import Fore, Style
 
 from computer import *
+from player import *
 
 # Default grid-size; future implementation to alter based on user choice
 grid_size = 10 
@@ -52,7 +44,7 @@ grid_bottom = f'{spacer*2}{blc}{l_x}{brc}'
 grid_numbers = spacer*3 + ''.join(f'{spacer*2}{i}' for i in range(1,11))
 
 
-def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2):
+def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2, **player):
     '''
     This function displays the updated grid for the player; 
     showing any hits and misses on the board.
@@ -63,7 +55,7 @@ def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2):
     'Dr Codie' on YouTube: https://www.youtube.com/@DrCodie
     '''
     # Forms grid top
-    print(grid_title_both)
+    print('\n', grid_title_both)
     print(grid_top_both)
     
     # Forms grid bodies for both the player and the opponents's grid.
@@ -73,6 +65,9 @@ def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2):
         grid_row = ''
         for i in range(grid_size):
             grid_element = grid 
+            for value in player.values():
+                if grid_location in value:
+                    grid_element = sunk
             if grid_location in misses:
                 grid_element = miss
             elif grid_location in hits:
@@ -100,7 +95,7 @@ def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2):
 
     # Forms grid bottom
     print(grid_bottom, spacer*3, grid_bottom)
-    print(grid_numbers, spacer*6, grid_numbers)
+    print(grid_numbers, spacer*6, grid_numbers, '\n'*2)
 
 
 def validate_guess(guesses):
@@ -209,22 +204,23 @@ guesses = []
 ship_sunk = []
 player = hits, misses, ship_sunk
 
-hits_2 = [11,12]
-misses_2 = [14,15,16]
+hits_2 = []
+misses_2 = []
 guesses_2 = []
-ship_sunk_2 = [24,25,26,27]
+ship_sunk_2 = []
 computer = hits_2, misses_2, ship_sunk_2
 
-display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2)
+# display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2)
+
+player_creation()
+
+cpu_creation(**ships_cpu)
 
 for i in range(100):
     guess = validate_guess(guesses)
     guess_conversion(guess)
-    guesses, ships_player, hits, misses, ship_sunk = hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player)
-    display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2)
-    print(f'hits:{hits}')
-    print(f'misses:{misses}')
-    print(f'sunk:{ship_sunk}')
+    guesses_2, ships_cpu, hits_2, misses_2, ship_sunk_2 = hit_or_miss(guess, guesses, hits_2, misses_2, ship_sunk_2, **ships_cpu)
+    display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2, **ships_player)
 
     if len(ship_sunk) == 17:
         print('You sunk all the enemy ships, you win the game!')
