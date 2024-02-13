@@ -20,7 +20,7 @@ grid_size = 10
 
 # Unicode characters used for border styling.
 # Grid border pieces:
-l_y = '\u2503 '                     # Vertical border
+l_y = '\u2503'                      # Vertical border
 l_x = '\u2501'*(3*grid_size + 3)    # Horizontal border
 tlc = '\u250F'                      # Top-left corner piece
 trc = '\u2513'                      # Top-right corner piece
@@ -39,7 +39,7 @@ hit = f'\U0001F7D2{spacer*2}'       # Star unicode character to indicate hit
 miss = f'\U0001F7AC{spacer*2}'      # Cross unicode character to indicate miss
 sunk = f'\u2B24{spacer*2}'          # Solid circle unicode character to indicate sunken ship
 
-grid_letters = ['A','B','C','D','E','F','G','H','I','J']
+grid_y = ['A','B','C','D','E','F','G','H','I','J']
 
 grid_title_player = f'\n{spacer*13}PLAYER GRID'
 grid_title_both = f'\n{spacer*13}PLAYER GRID{spacer*31}ENEMY GRID'
@@ -52,13 +52,13 @@ grid_bottom = f'{spacer*2}{blc}{l_x}{brc}'
 grid_numbers = spacer*3 + ''.join(f'{spacer*2}{i}' for i in range(1,11))
 
 
-def display_grid(hits, misses, ship_sunk):
+def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2):
     '''
     This function displays the updated grid for the player; 
     showing any hits and misses on the board.
 
     Two for loops create a grid that scales based on the defined 
-    grid_size variable.
+    grid_size variable. This is repeated for the opponent.
     Adapted from a python code tutorial video-series from 
     'Dr Codie' on YouTube: https://www.youtube.com/@DrCodie
     '''
@@ -66,9 +66,10 @@ def display_grid(hits, misses, ship_sunk):
     print(grid_title_both)
     print(grid_top_both)
     
-    # Forms grid body
+    # Forms grid bodies for both the player and the opponents's grid.
     grid_location = 11 # Starts at 11 as the grid numbering starts from 1,1 (A1)
-    for x in range(grid_size):
+    grid_location_2 = 11
+    for y in range(grid_size):
         grid_row = ''
         for i in range(grid_size):
             grid_element = grid 
@@ -76,11 +77,26 @@ def display_grid(hits, misses, ship_sunk):
                 grid_element = miss
             elif grid_location in hits:
                 grid_element = hit
-            elif grid_location in ship_sunk:
+            elif grid_location in s_sunk:
                 grid_element = sunk
             grid_row = grid_row + grid_element
             grid_location = grid_location + 1
-        print(grid_letters[x], l_y, grid_row, l_y, spacer*2, grid_letters[x], l_y, grid_row, l_y)
+        row = f'{l_y}{spacer*2}{grid_row}{spacer}{l_y}'
+
+        grid_row_2 = ''
+        for j in range(grid_size):
+            grid_element_2 = grid 
+            if grid_location_2 in misses_2:
+                grid_element_2 = miss
+            elif grid_location_2 in hits_2:
+                grid_element_2 = hit
+            elif grid_location_2 in s_sunk_2:
+                grid_element_2 = sunk
+            grid_row_2 = grid_row_2 + grid_element_2
+            grid_location_2 = grid_location_2 + 1
+        row_2 = f'{l_y}{spacer*2}{grid_row_2}{spacer}{l_y}'
+
+        print(grid_y[y], row, spacer*3, grid_y[y], row_2)
 
     # Forms grid bottom
     print(grid_bottom, spacer*3, grid_bottom)
@@ -191,20 +207,25 @@ hits = []
 misses = []
 guesses = []
 ship_sunk = []
+player = hits, misses, ship_sunk
 
-hits_c = []
-misses_c = []
-guesses_c = []
-ship_sunk_c = []
+hits_2 = [11,12]
+misses_2 = [14,15,16]
+guesses_2 = []
+ship_sunk_2 = [24,25,26,27]
+computer = hits_2, misses_2, ship_sunk_2
 
-display_grid(hits, misses, ship_sunk)
+display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2)
 
-# for i in range(20):
-#     guess = validate_guess(guesses)
-#     guess_conversion(guess)
-#     guesses, ships_player, hits, misses, ship_sunk = hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player)
-#     display_grid(hits, misses, ship_sunk)
+for i in range(100):
+    guess = validate_guess(guesses)
+    guess_conversion(guess)
+    guesses, ships_player, hits, misses, ship_sunk = hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player)
+    display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2)
+    print(f'hits:{hits}')
+    print(f'misses:{misses}')
+    print(f'sunk:{ship_sunk}')
 
-#     if len(ship_sunk) == 17:
-#         print('You sunk all the enemy ships, you win the game!')
-#         break
+    if len(ship_sunk) == 17:
+        print('You sunk all the enemy ships, you win the game!')
+        break
