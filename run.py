@@ -20,22 +20,37 @@ grid_size = 10
 
 # Unicode characters used for border styling.
 # Grid border pieces:
-line_y = '\u2503 ' # Vertical border
-line_x = '\u2501'*(3*grid_size + 3)  # Horizontal border
-tl_corner = '\u250F'
-tr_corner = '\u2513'
-br_corner = '\u251B'
-bl_corner = '\u2517'
+l_y = '\u2503 '                     # Vertical border
+l_x = '\u2501'*(3*grid_size + 3)    # Horizontal border
+tlc = '\u250F'                      # Top-left corner piece
+trc = '\u2513'                      # Top-right corner piece
+brc = '\u251B'                      # Bottom-right corner piece
+blc = '\u2517'                      # Bottom-left corner piece
 
     # colorama-imported colours are used to distinguish hits 
     # and misses from the board.
     # The string is ended with {Fore.WHITE} so that the rest 
     # of the display remains unchanged.
 
-grid = f'{Fore.RED}\U0001F785 {Fore.WHITE}' # Circle unicode character with space U0001F785
-hit = '\U0001F7D2  '  # Star unicode character to indicate hit
-miss = '\U0001F7AC ' # Cross unicode character to indicate miss
-sunk = '\u23FA  ' # Solid circle unicode character to indicate sunken ship
+# Grid construction elements
+spacer = ' '                        # String divider that adds empty space on the CLI display
+grid = f'\U0001F785{spacer*2}'      # Circle unicode character with space U0001F785
+hit = f'\U0001F7D2{spacer*2}'       # Star unicode character to indicate hit
+miss = f'\U0001F7AC{spacer*2}'      # Cross unicode character to indicate miss
+sunk = f'\u2B24{spacer*2}'          # Solid circle unicode character to indicate sunken ship
+
+grid_letters = ['A','B','C','D','E','F','G','H','I','J']
+
+grid_title_player = f'\n{spacer*13}PLAYER GRID'
+grid_title_both = f'\n{spacer*13}PLAYER GRID{spacer*31}ENEMY GRID'
+
+grid_top_player = f'\n{spacer*2}{tlc}{l_x}{trc}'
+grid_top_both = f'\n{spacer*2}{tlc}{l_x}{trc}{spacer*7}{tlc}{l_x}{trc}'
+
+grid_bottom = f'{spacer*2}{blc}{l_x}{brc}'
+
+grid_numbers = spacer*3 + ''.join(f'{spacer*2}{i}' for i in range(1,11))
+
 
 def display_grid(hits, misses, ship_sunk):
     '''
@@ -48,14 +63,14 @@ def display_grid(hits, misses, ship_sunk):
     'Dr Codie' on YouTube: https://www.youtube.com/@DrCodie
     '''
     # Forms grid top
-    print(f'\n  {tl_corner}{line_x}{tr_corner}')
-    grid_letters = ['A','B','C','D','E','F','G','H','I','J']
-
+    print(grid_title_both)
+    print(grid_top_both)
+    
     # Forms grid body
     grid_location = 11 # Starts at 11 as the grid numbering starts from 1,1 (A1)
     for x in range(grid_size):
         grid_row = ''
-        for y in range(grid_size):
+        for i in range(grid_size):
             grid_element = grid 
             if grid_location in misses:
                 grid_element = miss
@@ -65,10 +80,11 @@ def display_grid(hits, misses, ship_sunk):
                 grid_element = sunk
             grid_row = grid_row + grid_element
             grid_location = grid_location + 1
-        print(grid_letters[x], line_y, grid_row, line_y)
+        print(grid_letters[x], l_y, grid_row, l_y, spacer*2, grid_letters[x], l_y, grid_row, l_y)
 
     # Forms grid bottom
-    print(f'  {bl_corner}{line_x}{br_corner}\n     1  2  3  4  5  6  7  8  9  10\n')
+    print(grid_bottom, spacer*3, grid_bottom)
+    print(grid_numbers, spacer*6, grid_numbers)
 
 
 def validate_guess(guesses):
@@ -84,7 +100,6 @@ def validate_guess(guesses):
 
     grid_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     grid_numbers = ['1','2','3','4','5','6','7','8','9','10']
-    #guesses = ['D8', 'B9', 'C9', 'D9']
 
     valid = 0
     while valid == 0:
@@ -177,12 +192,19 @@ misses = []
 guesses = []
 ship_sunk = []
 
-for i in range(20):
-    guess = validate_guess(guesses)
-    guess_conversion(guess)
-    guesses, ships_player, hits, misses, ship_sunk = hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player)
-    display_grid(hits, misses, ship_sunk)
+hits_c = []
+misses_c = []
+guesses_c = []
+ship_sunk_c = []
 
-    if len(ship_sunk) == 17:
-        print('You sunk all the enemy ships, you win the game!')
-        break
+display_grid(hits, misses, ship_sunk)
+
+# for i in range(20):
+#     guess = validate_guess(guesses)
+#     guess_conversion(guess)
+#     guesses, ships_player, hits, misses, ship_sunk = hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player)
+#     display_grid(hits, misses, ship_sunk)
+
+#     if len(ship_sunk) == 17:
+#         print('You sunk all the enemy ships, you win the game!')
+#         break
