@@ -102,7 +102,8 @@ def validate_guess(guesses):
         except:
             print('Incorrect input, please try a new co-ordinate.\nFor example "D7"')
 
-    print(f'\nDialing in on {guess}.\nLaunching missile...')
+    print(f'\nTarget locked: {enemy}{guess}{reset}')
+    print(f'{fire}Missile launched...{reset}')
     return guess
 
 
@@ -142,19 +143,20 @@ def hit_or_miss(shot, shots, hits, misses, ship_sunk, **ships_cpu):
             hits.append(guess_conversion(shot))
             ship_sunk_check = [i in hits for i in ship]
             miss = 0
+            print(f'\n{fire}HIT! You have them in your scope, finish them.{reset}')
 
             if all(ship_sunk_check):
                 ship_sunk.extend(ship)
                 ship = []
                 hits = [i for i in hits if i not in ship_sunk]
                 miss = 0
-                print(f'You sunk my {name.upper()}!')
+                print(f'\nYou sunk my {name.upper()}!')
 
     if miss == 1:
         misses.append(guess_conversion(shot))
+        print('\nMiss. We should try another target')
     
     shots.append(shot)
-    print(f'Guesses: {len(shots)}')
     
     return shots, ships_cpu, hits, misses, ship_sunk
 
