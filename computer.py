@@ -4,6 +4,10 @@
 from random import randrange
 import math
 
+hits_2 = []
+misses_2 = []
+guesses_2 = []
+ship_sunk_2 = []
 
 ships_cpu = {
     'cruiser': [2.0],

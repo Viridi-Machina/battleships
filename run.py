@@ -57,11 +57,11 @@ def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2, **player):
             grid_location_2 = grid_location_2 + 1
         row_2 = f'{vertical_2}{spacer*2}{grid_row_2}{spacer}{vertical_2}'
 
-        print(grid_y[y], row, spacer*3, grid_y[y], row_2)
+        print(grid_letters[y], row, spacer*3, grid_letters[y], row_2)
 
     # Forms grid bottom
     print(grid_bottom_both)
-    print(grid_numbers, spacer*6, grid_numbers, '\n'*2)
+    print(grid_numbers_string, spacer*6, grid_numbers_string, '\n'*2)
 
 
 def validate_guess(guesses):
@@ -74,10 +74,6 @@ def validate_guess(guesses):
     the given number to form a string, which is converted into a final
     integer that can be used to determine the shot location on the grid.
     '''
-
-    grid_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-    grid_numbers = ['1','2','3','4','5','6','7','8','9','10']
-
     valid = 0
     while valid == 0:
         try:
@@ -113,7 +109,6 @@ def guess_conversion(guess):
     If the second co-ordinate is 10, then the ordinal value of the letter
     is multiplied by 10 as string concatenation would not work.
     '''
-
     ordinal = ord(guess[0]) - 64
     
     if guess[1:] == '10':
@@ -154,29 +149,11 @@ def hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player):
     
     return guesses, ships_player, hits, misses, ship_sunk
 
-# Stores all ships on the board in a dictionary for reference
-ships_player = {
-    'cruiser': [92,93],
-    'submarine': [110,100,90],
-    'destroyer': [58,68,78],
-    'battleship': [12,13,14,15],
-    'aircraft_carrier': [21,22,23,24,25]
-}
 
+cpu_creation(**ships_player)
 
-hits = []
-misses = []
-guesses = []
-ship_sunk = []
-player = hits, misses, ship_sunk
-
-hits_2 = []
-misses_2 = []
-guesses_2 = []
-ship_sunk_2 = []
-computer = hits_2, misses_2, ship_sunk_2
-
-display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2)
+display_grid(hits, misses, ship_sunk, hits_2, 
+             misses_2, ship_sunk_2, **ships_player)
 
 cpu_creation(**ships_cpu)
 

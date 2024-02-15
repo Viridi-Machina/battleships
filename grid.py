@@ -60,8 +60,10 @@ grid_bottom = f'{spacer*2}{bl_corner}{horizontal}{br_corner}'
 grid_bottom_player = f'{player}{grid_bottom}{reset}'
 grid_bottom_both = f'{grid_bottom_player}{spacer*5}{enemy}{grid_bottom}{reset}'
 
-grid_numbers = spacer*3 + ''.join(f'{spacer*2}{i}' for i in range(1,11))
+grid_letters = ['A','B','C','D','E','F','G','H','I','J']
+grid_numbers = ['1','2','3','4','5','6','7','8','9','10']
+grid_numbers_string = spacer*3 + ''.join(f'{spacer*2}{i}' for i in range(1,11))
 # The .join method converts the list comprehension into a string
 
-grid_y = ['A','B','C','D','E','F','G','H','I','J']
+
 

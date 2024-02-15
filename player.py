@@ -1,6 +1,11 @@
 from computer import *
 #from run import *
 
+hits = []
+misses = []
+guesses = []
+ship_sunk = []
+
 ships_player = {
     'cruiser': [2.0],
     'submarine': [3.0],
@@ -45,4 +50,6 @@ def player_creation():
             #     break
     except:
         print('Incorrect input, please try a new co-ordinate.\nFor example "D7"')
+    
+    return ships_sunk
 
