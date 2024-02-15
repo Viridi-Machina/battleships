@@ -40,9 +40,9 @@ def display_grid(**player):
             if grid_player in misses:
                 grid_x = miss
             elif grid_player in hits:
-                grid_x = hit_player
+                grid_x = hit
             elif grid_player in ship_sunk:
-                grid_x = sunk
+                grid_x = sunk_player
 
             grid_row = grid_row + grid_x
             grid_player = grid_player + 1
@@ -53,7 +53,7 @@ def display_grid(**player):
         grid_row_2 = ''
         for j in range(grid_size):
             grid_x2 = grid 
-            
+
             if grid_computer in misses_2:
                 grid_x2 = miss
             elif grid_computer in hits_2:
@@ -127,7 +127,7 @@ def guess_conversion(guess):
     return converted_guess
     
 
-def hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player):
+def hit_or_miss(shot, shots, hits, misses, ship_sunk, **ships_cpu):
     '''
     This function determines whether a guess results in a hit or a miss.
 
@@ -138,8 +138,8 @@ def hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player):
     '''
     miss = 1
     for name, ship in ships_player.items():
-        if guess_conversion(guess) in ship:
-            hits.append(guess_conversion(guess))
+        if guess_conversion(shot) in ship:
+            hits.append(guess_conversion(shot))
             ship_sunk_check = [i in hits for i in ship]
             miss = 0
 
@@ -151,12 +151,12 @@ def hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player):
                 print(f'You sunk my {name.upper()}!')
 
     if miss == 1:
-        misses.append(guess_conversion(guess))
+        misses.append(guess_conversion(shot))
     
-    guesses.append(guess)
-    print(f'Guesses: {len(guesses)}')
+    shots.append(shot)
+    print(f'Guesses: {len(shots)}')
     
-    return guesses, ships_player, hits, misses, ship_sunk
+    return shots, ships_cpu, hits, misses, ship_sunk
 
 
 cpu_creation(**ships_player)
@@ -168,11 +168,13 @@ cpu_creation(**ships_cpu)
 for i in range(100):
     guess = validate_guess(guesses_2)
     guess_conversion(guess)
-    guesses_2, ships_cpu, hits_2, misses_2, ship_sunk_2 = hit_or_miss(guess, guesses, hits_2, misses_2, ship_sunk_2, **ships_cpu)
-    #cpu_turn(guesses, hits, misses, ship_sunk, **ships_player)
+    guesses_2, ships_cpu, hits_2, misses_2, ship_sunk_2 = hit_or_miss(guess, guesses_2, hits_2, misses_2, ship_sunk_2, **ships_cpu)
+    cpu_turn(guesses, hits, misses, ship_sunk, **ships_player)
     display_grid(**ships_player)
+    print(guesses_2)
+    print(len(guesses_2))
     print(guesses)
-    print(len(guesses))
+    
     
 
     if len(ship_sunk) == 17:

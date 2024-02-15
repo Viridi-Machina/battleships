@@ -99,16 +99,15 @@ def cpu_creation(**ships_cpu):
     return ships_cpu
 
 
-def cpu_turn(guesses, hits, misses, ship_sunk, **ships_player):
+def cpu_turn(shots, hits, misses, ship_sunk, **ships_player):
 
     miss = 1
     for name, ship in ships_player.items():
         valid = 'N'
         while valid == 'N':
             target = randrange(11, 110)
-            if target not in guesses:
+            if target not in shots:
                 valid = 'Y'
-                guesses.append(target)
         
         if target in ship:
             hits.append(target)
@@ -125,7 +124,7 @@ def cpu_turn(guesses, hits, misses, ship_sunk, **ships_player):
     if miss == 1:
         misses.append(target)
     
-    guesses.append(target)
+    shots.append(target)
     
-    return guesses, ships_player, hits, misses, ship_sunk
+    return shots, ships_player, hits, misses, ship_sunk
     
