@@ -16,7 +16,7 @@ enemy = Fore.RED
 # to seperate each element during construction.
 #
 # As the goal is two simultaneously display two grids; one for the player and
-# one for the opponent, some variables have been created with a 2-stage 
+# one for the opponent, some variables have been created with a 2-stage
 # process to improve readability and reduce overall line length.
 #
 # Colorama-imported colours are used to distinguish hits and misses from the
@@ -63,7 +63,7 @@ grid_bottom = f'{spacer*2}{bl_corner}{horizontal}{br_corner}'
 grid_bottom_player = f'{player}{grid_bottom}{reset}'
 grid_bottom_both = f'{grid_bottom_player}{spacer*5}{enemy}{grid_bottom}{reset}'
 
-grid_letters = ['A','B','C','D','E','F','G','H','I','J']
-grid_numbers = ['1','2','3','4','5','6','7','8','9','10']
-grid_numbers_string = spacer*3 + ''.join(f'{spacer*2}{i}' for i in range(1,11))
+grid_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+grid_numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+grid_numbers_str = spacer*3 + ''.join(f'{spacer*2}{i}' for i in range(1, 11))
 # The .join method converts the list comprehension into a string
