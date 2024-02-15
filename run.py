@@ -24,39 +24,49 @@ def display_grid(**player):
     # Forms grid bodies for both the player and the opponents's grid.
     # grid_location starts at 11 as the grid numbering starts from 1,1 (A1)
     # The player grid has an added for loop to display all their ships.
-    grid_location = 11 
-    grid_location_2 = 11
-    for y in range(grid_size):
+    grid_player = 11 
+    grid_computer = 11
+
+    
+    for letter in range(grid_size):
+        # Player Grid
         grid_row = ''
         for i in range(grid_size):
-            grid_element = grid 
-            for value in player.values():
-                if grid_location in value:
-                    grid_element = sunk
-            if grid_location in misses:
-                grid_element = miss_player
-            elif grid_location in hits:
-                grid_element = hit_player
-            elif grid_location in ship_sunk:
-                grid_element = sunk
-            grid_row = grid_row + grid_element
-            grid_location = grid_location + 1
+            grid_x = grid 
+            for ship in player.values():
+                if grid_player in ship:
+                    grid_x = ship_player
+
+            if grid_player in misses:
+                grid_x = miss
+            elif grid_player in hits:
+                grid_x = hit_player
+            elif grid_player in ship_sunk:
+                grid_x = sunk
+
+            grid_row = grid_row + grid_x
+            grid_player = grid_player + 1
+
         row = f'{vertical}{spacer*2}{grid_row}{spacer}{vertical}'
 
+        # Computer Grid
         grid_row_2 = ''
         for j in range(grid_size):
-            grid_element_2 = grid 
-            if grid_location_2 in misses_2:
-                grid_element_2 = miss
-            elif grid_location_2 in hits_2:
-                grid_element_2 = hit
-            elif grid_location_2 in ship_sunk_2:
-                grid_element_2 = sunk_2
-            grid_row_2 = grid_row_2 + grid_element_2
-            grid_location_2 = grid_location_2 + 1
+            grid_x2 = grid 
+            
+            if grid_computer in misses_2:
+                grid_x2 = miss
+            elif grid_computer in hits_2:
+                grid_x2 = hit
+            elif grid_computer in ship_sunk_2:
+                grid_x2 = sunk_2
+
+            grid_row_2 = grid_row_2 + grid_x2
+            grid_computer = grid_computer + 1
+
         row_2 = f'{vertical_2}{spacer*2}{grid_row_2}{spacer}{vertical_2}'
 
-        print(grid_letters[y], row, spacer*3, grid_letters[y], row_2)
+        print(grid_letters[letter], row, spacer*3, grid_letters[letter], row_2)
 
     # Forms grid bottom
     print(grid_bottom_both)
@@ -156,11 +166,13 @@ display_grid(**ships_player)
 cpu_creation(**ships_cpu)
 
 for i in range(100):
-    guess = validate_guess(guesses)
+    guess = validate_guess(guesses_2)
     guess_conversion(guess)
     guesses_2, ships_cpu, hits_2, misses_2, ship_sunk_2 = hit_or_miss(guess, guesses, hits_2, misses_2, ship_sunk_2, **ships_cpu)
-    cpu_turn(guesses, hits, misses, ship_sunk, **ships_player)
+    #cpu_turn(guesses, hits, misses, ship_sunk, **ships_player)
     display_grid(**ships_player)
+    print(guesses)
+    print(len(guesses))
     
 
     if len(ship_sunk) == 17:
