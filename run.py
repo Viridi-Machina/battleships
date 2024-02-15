@@ -173,15 +173,11 @@ for i in range(100):
     guesses_2, ships_cpu, hits_2, misses_2, ship_sunk_2 = hit_or_miss(guess, guesses_2, hits_2, misses_2, ship_sunk_2, **ships_cpu)
     guesses, ships_player, hits, misses, ship_sunk  = cpu_turn(guesses, hits, misses, ship_sunk, **ships_player)
     display_grid(**ships_player)
-    print(ships_player)
-    print(ships_cpu)
-    print(guesses)
-    print(f'hits: {hits}')
-    print(f'misses: {misses}')
-    print(f'sunk: {ship_sunk}')
     
-    
-
-    if len(ship_sunk) == 17:
+    # Victory conditions
+    if len(ship_sunk_2) == 17:
         print('You sunk all the enemy ships, you win the game!')
+        break
+    elif len(ship_sunk) == 17:
+        print('All of your ships have been destroyed. You lose this battle!')
         break
