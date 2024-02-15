@@ -1,14 +1,12 @@
 # Track score and save user email for login, store score and user information on external sheet
 # With enough time, allow import from external sheet (with link for users) to import ship placement
 
-from typing import Any
-
 from grid import *
 from computer import *
 from player import *
 
 
-def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2, **player):
+def display_grid(**player):
     '''
     This function displays the updated grid for the player and the opponent;
     showing any hits and misses on the board, as well as the player's ships.
@@ -38,7 +36,7 @@ def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2, **player):
                 grid_element = miss
             elif grid_location in hits:
                 grid_element = hit
-            elif grid_location in s_sunk:
+            elif grid_location in ship_sunk:
                 grid_element = sunk
             grid_row = grid_row + grid_element
             grid_location = grid_location + 1
@@ -51,7 +49,7 @@ def display_grid(hits, misses, s_sunk, hits_2, misses_2, s_sunk_2, **player):
                 grid_element_2 = miss
             elif grid_location_2 in hits_2:
                 grid_element_2 = hit
-            elif grid_location_2 in s_sunk_2:
+            elif grid_location_2 in ship_sunk_2:
                 grid_element_2 = sunk_2
             grid_row_2 = grid_row_2 + grid_element_2
             grid_location_2 = grid_location_2 + 1
@@ -128,7 +126,7 @@ def hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player):
     to show a new character on the displayed grid.
     '''
     miss = 1
-    for key, ship in ships_player.items():
+    for name, ship in ships_player.items():
         if guess_conversion(guess) in ship:
             hits.append(guess_conversion(guess))
             ship_sunk_check = [i in hits for i in ship]
@@ -139,7 +137,7 @@ def hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player):
                 ship = []
                 hits = [i for i in hits if i not in ship_sunk]
                 miss = 0
-                print(f'You sunk my {key.upper()}!')
+                print(f'You sunk my {name.upper()}!')
 
     if miss == 1:
         misses.append(guess_conversion(guess))
@@ -152,8 +150,7 @@ def hit_or_miss(guess, guesses, hits, misses, ship_sunk, **ships_player):
 
 cpu_creation(**ships_player)
 
-display_grid(hits, misses, ship_sunk, hits_2, 
-             misses_2, ship_sunk_2, **ships_player)
+display_grid(**ships_player)
 
 cpu_creation(**ships_cpu)
 
@@ -161,7 +158,8 @@ for i in range(100):
     guess = validate_guess(guesses)
     guess_conversion(guess)
     guesses_2, ships_cpu, hits_2, misses_2, ship_sunk_2 = hit_or_miss(guess, guesses, hits_2, misses_2, ship_sunk_2, **ships_cpu)
-    display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2, **ships_player)
+    display_grid(**ships_player)
+    cpu_turn(guesses, hits, misses, ship_sunk, **ships_player)
 
     if len(ship_sunk) == 17:
         print('You sunk all the enemy ships, you win the game!')

@@ -64,6 +64,3 @@ grid_letters = ['A','B','C','D','E','F','G','H','I','J']
 grid_numbers = ['1','2','3','4','5','6','7','8','9','10']
 grid_numbers_string = spacer*3 + ''.join(f'{spacer*2}{i}' for i in range(1,11))
 # The .join method converts the list comprehension into a string
-
-
-

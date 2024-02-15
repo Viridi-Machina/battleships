@@ -4,10 +4,12 @@
 from random import randrange
 import math
 
-hits_2 = []
-misses_2 = []
-guesses_2 = []
-ship_sunk_2 = []
+from player import *
+
+hits = []
+misses = []
+guesses = []
+ship_sunk = []
 
 ships_cpu = {
     'cruiser': [2.0],
@@ -106,3 +108,35 @@ def cpu_creation(**ships_cpu):
                 list.extend(ship)
 
     return ships_cpu
+
+
+def cpu_turn(guesses, hits, misses, ship_sunk, **ships_player):
+
+    miss = 1
+    for name, ship in ships_player.items():
+        valid = 'N'
+        while valid == 'N':
+            target = randrange(11, 110)
+            if target not in guesses:
+                valid = 'Y'
+                guesses.append(target)
+        
+        if target in ship:
+            hits.append(target)
+            ship_sunk_check = [i in hits for i in ship]
+            miss = 0
+
+            if all(ship_sunk_check):
+                ship_sunk.extend(ship)
+                ship = []
+                hits = [i for i in hits if i not in ship_sunk]
+                miss = 0
+                print(f'We lost our {name.upper()}!')
+
+    if miss == 1:
+        misses.append(target)
+    
+    guesses.append(target)
+    
+    return guesses, ships_player, hits, misses, ship_sunk
+    

@@ -1,10 +1,11 @@
 from computer import *
-#from run import *
+from run import display_grid
 
-hits = []
-misses = []
-guesses = []
-ship_sunk = []
+
+hits_2 = []
+misses_2 = []
+guesses_2 = []
+ship_sunk_2 = []
 
 ships_player = {
     'cruiser': [2.0],
@@ -30,7 +31,7 @@ def player_creation():
             cpu_creation(**ships_player)
             for value in ships_player.values():
                 ship_sunk.extend(value)
-            display_grid(hits, misses, ship_sunk, hits_2, misses_2, ship_sunk_2, **ships_player)
+            display_grid(**ships_player)
            
 
                             
@@ -51,5 +52,5 @@ def player_creation():
     except:
         print('Incorrect input, please try a new co-ordinate.\nFor example "D7"')
     
-    return ships_sunk
+    return
 
