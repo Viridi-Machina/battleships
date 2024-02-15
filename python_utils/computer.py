@@ -97,12 +97,11 @@ def cpu_creation(**ships_cpu):
 
 def cpu_turn(guesses, hits, misses, ship_sunk, **ships_player):
     '''
-    This function determines whether a guess results in a hit or a miss.
+    This function is a modified version of the hit_or_miss function,
+    for use by the computer when it takes it's turn.
 
-    List comprehension is used to compare whether a ship's entire list
-    is contained within the 'hits' list. If True then the ship is
-    returned empty and the hits are replaced with the 'ship_sunk' list
-    to show a new character on the displayed grid.
+    It a random shot generator as well as a modified print message when
+    when one of the player's ships has been sunk.
     '''
     valid = 'N'
     while valid == 'N':

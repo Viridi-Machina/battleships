@@ -175,8 +175,17 @@ display_grid(**ships_player)
 for i in range(100):
     guess = validate_guess(guesses_2)
     guess_conversion(guess)
-    guesses_2, ships_cpu, hits_2, misses_2, ship_sunk_2 = hit_or_miss(guess, guesses_2, hits_2, misses_2, ship_sunk_2, **ships_cpu)
-    guesses, ships_player, hits, misses, ship_sunk = cpu_turn(guesses, hits, misses, ship_sunk, **ships_player)
+
+    (guesses_2, ships_cpu,
+    hits_2, misses_2,
+    ship_sunk_2) = hit_or_miss(guess, guesses_2, hits_2, 
+                              misses_2, ship_sunk_2, **ships_cpu)
+
+    (guesses, ships_player,
+    hits, misses,
+    ship_sunk) = cpu_turn(guesses, hits, misses, 
+                         ship_sunk, **ships_player)
+
     display_grid(**ships_player)
 
     # Victory conditions
