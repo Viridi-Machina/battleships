@@ -1,19 +1,5 @@
-from computer import *
-from run import display_grid
+from python_utils.stats import *
 
-
-hits_2 = []
-misses_2 = []
-guesses_2 = []
-ship_sunk_2 = []
-
-ships_player = {
-    'cruiser': [2.0],
-    'submarine': [3.0],
-    'destroyer': [3.1],
-    'battleship': [4.0],
-    'aircraft_carrier': [5.0]
-}
 
 def player_creation():
     try:
@@ -27,11 +13,11 @@ def player_creation():
             
             
             
-        if choice == 'N':
-            cpu_creation(**ships_player)
-            for value in ships_player.values():
-                ship_sunk.extend(value)
-            display_grid(**ships_player)
+        # if choice == 'N':
+        #     cpu_creation(**ships_player)
+        #     for value in ships_player.values():
+        #         ship_sunk.extend(value)
+            
            
 
                             

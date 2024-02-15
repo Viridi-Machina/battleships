@@ -4,20 +4,9 @@
 from random import randrange
 import math
 
-from player import *
+from python_utils.stats import *
 
-hits = []
-misses = []
-guesses = []
-ship_sunk = []
 
-ships_cpu = {
-    'cruiser': [2.0],
-    'submarine': [3.0],
-    'destroyer': [3.1],
-    'battleship': [4.0],
-    'aircraft_carrier': [5.0]
-}
 
 
 def validate_placement(ship, start, direction, in_use):

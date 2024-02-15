@@ -41,9 +41,12 @@ grid = f'{water}\U0001F785{reset}{spacer}'
 
 # Star indicate hit
 hit = f'{fire}\U0001F7D2{reset}{spacer}'
+# Circle with X to indicate hit on player
+hit_player = f'{fire}\u2BBE{reset}{spacer*2}'
 
 # Cross to indicate miss
 miss = f'{player}\U0001F7AC{reset}{spacer}'
+miss_player = f'{enemy}\U0001F7AC{reset}{spacer}'
 
 # Solid circle to indicate sunken ship
 sunk = f'{player}\u2B24{reset}{spacer*2}'
