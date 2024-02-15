@@ -1,4 +1,4 @@
-from python_utils.stats import *
+#from python_utils.stats import *
 
 
 def player_creation():

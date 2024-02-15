@@ -46,7 +46,7 @@ hit = f'{fire}\U0001F7D2{reset}{spacer}'
 miss = f'{Fore.WHITE}\U0001F7AC{reset}{spacer}'
 
 # Solid circle to display player ship or sunken enemy ship
-ship_player = f'{player}\u2B24{reset}{spacer*2}'
+ship_player_display = f'{player}\u2B24{reset}{spacer*2}'
 sunk_2 = f'{enemy}\u2B24{reset}{spacer*2}'
 
 # Circle with X to indicate hit on player

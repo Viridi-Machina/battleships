@@ -35,7 +35,7 @@ def display_grid(**player):
             grid_x = grid 
             for ship in player.values():
                 if grid_player in ship:
-                    grid_x = ship_player
+                    grid_x = ship_player_display
 
             if grid_player in misses:
                 grid_x = miss
@@ -137,7 +137,7 @@ def hit_or_miss(shot, shots, hits, misses, ship_sunk, **ships_cpu):
     to show a new character on the displayed grid.
     '''
     miss = 1
-    for name, ship in ships_player.items():
+    for name, ship in ships_cpu.items():
         if guess_conversion(shot) in ship:
             hits.append(guess_conversion(shot))
             ship_sunk_check = [i in hits for i in ship]
@@ -161,19 +161,24 @@ def hit_or_miss(shot, shots, hits, misses, ship_sunk, **ships_cpu):
 
 cpu_creation(**ships_player)
 
+cpu_creation(**ships_cpu)
+
 display_grid(**ships_player)
 
-cpu_creation(**ships_cpu)
+
 
 for i in range(100):
     guess = validate_guess(guesses_2)
     guess_conversion(guess)
     guesses_2, ships_cpu, hits_2, misses_2, ship_sunk_2 = hit_or_miss(guess, guesses_2, hits_2, misses_2, ship_sunk_2, **ships_cpu)
-    cpu_turn(guesses, hits, misses, ship_sunk, **ships_player)
+    guesses, ships_player, hits, misses, ship_sunk  = cpu_turn(guesses, hits, misses, ship_sunk, **ships_player)
     display_grid(**ships_player)
-    print(guesses_2)
-    print(len(guesses_2))
+    print(ships_player)
+    print(ships_cpu)
     print(guesses)
+    print(f'hits: {hits}')
+    print(f'misses: {misses}')
+    print(f'sunk: {ship_sunk}')
     
     
 

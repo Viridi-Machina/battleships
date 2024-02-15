@@ -4,7 +4,7 @@
 from random import randrange
 import math
 
-from python_utils.stats import *
+#from python_utils.stats import *
 
 
 
@@ -99,16 +99,23 @@ def cpu_creation(**ships_cpu):
     return ships_cpu
 
 
-def cpu_turn(shots, hits, misses, ship_sunk, **ships_player):
+def cpu_turn(guesses, hits, misses, ship_sunk, **ships_player):
+    '''
+    This function determines whether a guess results in a hit or a miss.
 
+    List comprehension is used to compare whether a ship's entire list
+    is contained within the 'hits' list. If True then the ship is
+    returned empty and the hits are replaced with the 'ship_sunk' list
+    to show a new character on the displayed grid.
+    '''
+    valid = 'N'
+    while valid == 'N':
+            target = randrange(11, 110)
+            if target not in guesses:
+                valid = 'Y'
+    
     miss = 1
     for name, ship in ships_player.items():
-        valid = 'N'
-        while valid == 'N':
-            target = randrange(11, 110)
-            if target not in shots:
-                valid = 'Y'
-        
         if target in ship:
             hits.append(target)
             ship_sunk_check = [i in hits for i in ship]
@@ -119,12 +126,12 @@ def cpu_turn(shots, hits, misses, ship_sunk, **ships_player):
                 ship = []
                 hits = [i for i in hits if i not in ship_sunk]
                 miss = 0
-                print(f'We lost our {name.upper()}!')
+                print(f'We just lost our {name.upper()}!')
 
     if miss == 1:
         misses.append(target)
     
-    shots.append(target)
+    guesses.append(target)
+    print(f'Guesses: {len(guesses)}')
     
-    return shots, ships_player, hits, misses, ship_sunk
-    
+    return guesses, ships_player, hits, misses, ship_sunk
