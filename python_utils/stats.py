@@ -20,6 +20,8 @@ hits = []
 misses = []
 guesses = []
 ship_sunk = []
+aim = []
+missed = 0
 
 ships_cpu = {
     'cruiser': [2.0],

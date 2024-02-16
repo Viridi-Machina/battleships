@@ -95,7 +95,7 @@ def cpu_creation(**ships_cpu):
     return ships_cpu
 
 
-def cpu_turn(guesses, hits, misses, ship_sunk, **ships_player):
+def cpu_turn(guesses, hits, misses, ship_sunk, aim, missed, **ships_player):
     '''
     This function is a modified version of the hit_or_miss function,
     for use by the computer when it takes it's turn.
@@ -105,28 +105,46 @@ def cpu_turn(guesses, hits, misses, ship_sunk, **ships_player):
     '''
     valid = 'N'
     while valid == 'N':
-        target = randrange(11, 110)
+        if len(aim) > 0:
+            target = aim[randrange(len(aim))]
+        else:
+            target = randrange(11, 110)
+
         if target not in guesses:
             valid = 'Y'
 
-    miss = 1
+    missed = 1
     for name, ship in ships_player.items():
         if target in ship:
             hits.append(target)
             ship_sunk_check = [i in hits for i in ship]
-            miss = 0
+            missed = 0
 
             if all(ship_sunk_check):
                 ship_sunk.extend(ship)
                 ship = []
                 hits = [i for i in hits if i not in ship_sunk]
-                miss = 0
+                missed = 2
                 print(f'We just lost our {name.upper()}!')
 
-    if miss == 1:
+    if missed == 1:
         misses.append(target)
 
     guesses.append(target)
-    print(f'Guesses: {len(guesses)}')
 
-    return guesses, ships_player, hits, misses, ship_sunk
+    return guesses, ships_player, hits, misses, ship_sunk, aim, missed
+
+
+def cpu_assist(aim, guesses):
+
+    target = guesses[-1]
+    logic = []
+    if len(aim) < 1:
+        logic = [target - 1, target + 1, target - 10, target + 10]
+
+    potential = []
+    for i in range(len(logic)):
+        if logic[i] not in guesses and logic[i] > 11 and logic[i] < 110:
+            potential.append(logic[i])
+    
+    return potential
