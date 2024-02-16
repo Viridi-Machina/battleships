@@ -173,7 +173,7 @@ def cpu_assist(aim, guesses, hits):
 
         # Validates and checks if future guesses are legal
         for j in range(len(logic)):
-            if logic[j] not in guesses and logic[j] > 11 and logic[j] < 110:
+            if logic[j] not in guesses and logic[j] > 11 and logic[j] <= 110:
                 potential.append(logic[j])
         try:
             if (target - 1) % 10 == 0:
