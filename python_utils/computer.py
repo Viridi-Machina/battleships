@@ -112,6 +112,7 @@ def cpu_turn(guesses, hits, misses, ship_sunk, aim, missed, **ships_player):
 
         if target not in guesses:
             valid = 'Y'
+            guesses.append(target)
 
     missed = 1
     for name, ship in ships_player.items():
@@ -124,27 +125,66 @@ def cpu_turn(guesses, hits, misses, ship_sunk, aim, missed, **ships_player):
                 ship_sunk.extend(ship)
                 ship = []
                 hits = [i for i in hits if i not in ship_sunk]
-                missed = 2
+                missed = 0
                 print(f'We just lost our {name.upper()}!')
 
     if missed == 1:
         misses.append(target)
 
-    guesses.append(target)
+    if len(aim) > 0:
+        aim.remove(target)
 
-    return guesses, ships_player, hits, misses, ship_sunk, aim, missed
+    return guesses, ships_player, hits, misses, ship_sunk, missed
 
 
-def cpu_assist(aim, guesses):
+def cpu_assist(aim, guesses, hits):
+    '''
+    This function acts as the computer logic for tactical firing.
+    It takes guesses, compares with hits and adds new potential
+    shots to the que if they are in the same direction as a ship
+    that has already been hit.
+
+    As the hits list is automatically overwritten on ship completion
+    the computer should display relatively 'smart' thinking.
+    '''
+    potential = []
+    logic = []
+    for i in range(len(guesses)):
+        if len(hits) <= 1:
+            break
+
+        if guesses[i] in hits and guesses[i] + 1 in hits:
+            logic.append(guesses[i] - 1)
+        if guesses[i] in hits and guesses[i] + 10 in hits:
+            logic.append(guesses[i] - 10)
+        if guesses[i] in hits and guesses[i] - 1 in hits:
+            logic.append(guesses[i] + 1)
+        if guesses[i] in hits and guesses[i] - 10 in hits:
+            logic.append(guesses[i] + 10)
 
     target = guesses[-1]
-    logic = []
-    if len(aim) < 1:
-        logic = [target - 1, target + 1, target - 10, target + 10]
+    try_again = 'Y'
+    while try_again == 'Y':
+        # On hit, expands on the most recent guess
+        if len(logic) > 0:
+            pass
+        elif len(aim) < 1:
+            logic = [target - 1, target + 1, target - 10, target + 10]
 
-    potential = []
-    for i in range(len(logic)):
-        if logic[i] not in guesses and logic[i] > 11 and logic[i] < 110:
-            potential.append(logic[i])
-    
+        # Validates and checks if future guesses are legal
+        for j in range(len(logic)):
+            if logic[j] not in guesses and logic[j] > 11 and logic[j] < 110:
+                potential.append(logic[j])
+        if (target - 1) % 10 == 0:
+            potential.remove(target - 1)
+        if (target + 1) % 10 == 1:
+            potential.remove(target + 1)
+
+        if len(hits) >= 1 and potential == []:
+            target = hits[randrange(len(hits))]
+            logic = []
+            try_again = 'Y'
+        else:
+            try_again = 'N'
+
     return potential

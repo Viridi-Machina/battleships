@@ -183,14 +183,19 @@ for i in range(100):
 
     (guesses, ships_player,
     hits, misses,
-    ship_sunk, aim, missed) = cpu_turn(guesses, hits, misses, 
+    ship_sunk, missed) = cpu_turn(guesses, hits, misses, 
                          ship_sunk, aim, missed, **ships_player)
 
     display_grid(**ships_player)
-
-    if missed == 0:
-        aim = cpu_assist(aim, guesses)
-
+    
+    
+    if missed == 0 or len(hits) > 1:
+        aim = cpu_assist(aim, guesses, hits)
+    
+    print('guesses', guesses)
+    print('hits', hits)
+    print('misses:', misses)
+    print('aim:', aim)
     # Victory conditions
     if len(ship_sunk_2) == 17:
         print('You sunk all the enemy ships, you win the game!')
