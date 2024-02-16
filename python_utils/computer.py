@@ -125,7 +125,7 @@ def cpu_turn(guesses, hits, misses, ship_sunk, aim, missed, **ships_player):
                 ship_sunk.extend(ship)
                 ship = []
                 hits = [i for i in hits if i not in ship_sunk]
-                missed = 0
+                missed = 2
                 print(f'We just lost our {name.upper()}!')
 
     if missed == 1:
@@ -175,10 +175,13 @@ def cpu_assist(aim, guesses, hits):
         for j in range(len(logic)):
             if logic[j] not in guesses and logic[j] > 11 and logic[j] < 110:
                 potential.append(logic[j])
-        if (target - 1) % 10 == 0:
-            potential.remove(target - 1)
-        if (target + 1) % 10 == 1:
-            potential.remove(target + 1)
+        try:
+            if (target - 1) % 10 == 0:
+                potential.remove(target - 1)
+            if (target + 1) % 10 == 1:
+                potential.remove(target + 1)
+        except ValueError:
+            pass
 
         if len(hits) >= 1 and potential == []:
             target = hits[randrange(len(hits))]

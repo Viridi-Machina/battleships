@@ -191,7 +191,9 @@ for i in range(100):
     
     if missed == 0 or len(hits) > 1:
         aim = cpu_assist(aim, guesses, hits)
-    
+    if missed == 2 and len(hits) == 0:
+        aim = []
+
     print('guesses', guesses)
     print('hits', hits)
     print('misses:', misses)
