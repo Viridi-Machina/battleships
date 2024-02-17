@@ -1,5 +1,3 @@
-#from python_utils.stats import *
-
 
 def player_creation_choice():
     '''
