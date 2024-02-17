@@ -183,9 +183,7 @@ print(f'{player}| █ ██ ███ █████ ████████'
 
 print('   █ ▄▄ ▄▄▄ ▄▄▄▄▄ █▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄█ ▄▄▄ ▄▄ █')
 
-print(fire)
-tprint('YOU ARE VICTORIOUS', font='block-medium')
-# print(reset)
+
 
 cpu_creation(**ships_player)
 
@@ -194,32 +192,39 @@ cpu_creation(**ships_cpu)
 display_grid(**ships_player)
 
 
-# for i in range(100):
-#     guess = validate_guess(guesses_2)
-#     guess_conversion(guess)
+for i in range(100):
+    guess = validate_guess(guesses_2)
+    guess_conversion(guess)
 
-#     (guesses_2, ships_cpu,
-#     hits_2, misses_2,
-#     ship_sunk_2) = hit_or_miss(guess, guesses_2, hits_2, 
-#                               misses_2, ship_sunk_2, **ships_cpu)
+    (guesses_2, ships_cpu,
+    hits_2, misses_2,
+    ship_sunk_2) = hit_or_miss(guess, guesses_2, hits_2, 
+                              misses_2, ship_sunk_2, **ships_cpu)
 
-#     (guesses, ships_player,
-#     hits, misses,
-#     ship_sunk, missed) = cpu_turn(guesses, hits, misses, 
-#                          ship_sunk, aim, missed, **ships_player)
+    (guesses, ships_player,
+    hits, misses,
+    ship_sunk, missed) = cpu_turn(guesses, hits, misses, 
+                         ship_sunk, aim, missed, **ships_player)
 
-#     display_grid(**ships_player)
+    display_grid(**ships_player)
     
     
-#     if missed == 0 or len(hits) > 1:
-#         aim = cpu_assist(aim, guesses, hits)
-#     if missed == 2 and len(hits) == 0:
-#         aim = []
+    if missed == 0 or len(hits) > 1:
+        aim = cpu_assist(aim, guesses, hits)
+    if missed == 2 and len(hits) == 0:
+        aim = []
 
-#     # Victory conditions
-#     if len(ship_sunk_2) == 17:
-#         print('You sunk all the enemy ships, you win the game!')
-#         break
-#     elif len(ship_sunk) == 17:
-#         print('All of your ships have been destroyed. You lose this battle!')
-#         break
+    # Victory conditions
+    if len(ship_sunk_2) == 17:
+        print(fire)
+        print(f'{spacer*22}You sunk all the enemy ships!')
+        print(f'{player}▄'*80, fire)
+        tprint('YOU ARE VICTORIOUS', font='block-medium')
+        break
+    elif len(ship_sunk) == 17:
+        print(enemy)
+        print(f'{spacer*10}All of your ships have been destroyed. You lose this battle!')
+        print(f'{fire}▄'*80, enemy)
+        tprint('   YOU HAVE LOST', font='block-medium')
+        print(reset)
+        break
