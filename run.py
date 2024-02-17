@@ -3,6 +3,8 @@
 # With enough time, allow import from external sheet
 # (with link for users) to import ship placement
 
+from art import *
+
 from python_utils.grid import *
 from python_utils.computer import *
 from python_utils.player import *
@@ -165,6 +167,10 @@ def hit_or_miss(shot, shots, hits, misses, ship_sunk, **ships_cpu):
     return shots, ships_cpu, hits, misses, ship_sunk
 
 
+print(fire)
+tprint('BATTLESHIPS', font='block-medium')
+print(reset)
+
 cpu_creation(**ships_player)
 
 cpu_creation(**ships_cpu)
@@ -194,10 +200,6 @@ for i in range(100):
     if missed == 2 and len(hits) == 0:
         aim = []
 
-    print('guesses', guesses)
-    print('hits', hits)
-    print('misses:', misses)
-    print('aim:', aim)
     # Victory conditions
     if len(ship_sunk_2) == 17:
         print('You sunk all the enemy ships, you win the game!')

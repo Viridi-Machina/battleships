@@ -1,28 +1,18 @@
 #from python_utils.stats import *
 
 
-def player_creation():
+def player_creation(ships_player):
+    
+    choices = ['Y', 'N']
     try:
         manual_placement = input('Would you like to place your own ships? Y / N\n')
         choice = manual_placement.upper().strip()
 
         if choice == 'Y':
             print('\n')
-            
-            
-            
-            
-            
-        # if choice == 'N':
-        #     cpu_creation(**ships_player)
-        #     for value in ships_player.values():
-        #         ship_sunk.extend(value)
-            
-           
-
-                            
-
-
+       
+        if choice == 'N':
+            pass
 
             # if str.isalpha(guess[0]) == False:
             #     print('First co-ordinate must be a letter A-J.')
@@ -38,5 +28,5 @@ def player_creation():
     except:
         print('Incorrect input, please try a new co-ordinate.\nFor example "D7"')
     
-    return
+    return choice
 

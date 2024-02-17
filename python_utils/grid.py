@@ -1,5 +1,5 @@
-#          Grid construction elements (Using unicode characters)              #
-# ___________________________________________________________________________ #
+#          Grid construction elements (Using unicode characters)              
+# ___________________________________________________________________________ 
 
 from colorama import Fore, Style
 
