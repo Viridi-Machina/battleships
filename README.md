@@ -1,3 +1,21 @@
+# BATTLESHIPS
+
+amiresponsive image here
+
+## Visit the repository [here](https://github.com/Viridi-Machina/battleships) or view on a live terminal [here](https://battleships-v-a3fa1471e145.herokuapp.com/)
+
+## Summary
+*BATTLESHIPS* is a based on the original pen-and-paper classic and inspired by the interactive board game still played and loved to this day.
+
+The player is simultaneously shown two grids; one displaying their ship locations and another for the computer opponent.<br>
+Both boards update with hits, misses and fully-sunken ships as the game progresses. 
+
+The computer shouldn't be fooled for an easy opponent however, as it's aiming algorithm simulates realistic and tactical firing like a human would. 
+The player and computer take turns firing until all ships on a grid have been sunk.
+
+The player's ships are displayed on the grid with a :large_blue_circle:, whilst enemy ships once fully destroyed display as a :red_circle:.
+*Visual and colourful* feedback is also given as fiery explosions for hits, with misses displaying as a white 'X' as to not overstimulate the grid with too much colour.
+
 ## :purple_circle: Deployment
 
 When deploying to Heroku, there are some essential steps that must be taken to ensure functionality of the deployed site:
