@@ -1,32 +1,32 @@
 #from python_utils.stats import *
 
 
-def player_creation(ships_player):
-    
-    choices = ['Y', 'N']
-    try:
-        manual_placement = input('Would you like to place your own ships? Y / N\n')
-        choice = manual_placement.upper().strip()
+def player_creation_choice():
+    '''
+    This function asks the player if they would like to have their ships
+    automatically generated or not, and returns their choice.
+    '''
+    valid = 0
+    while valid == 0:
+        choices = ['Y', 'N']
+        try:
+            manual_placement = input('Would you like to place'
+                                     'your own ships? Y / N\n')
+            
+            choice = manual_placement.upper().strip()
 
-        if choice == 'Y':
-            print('\n')
-       
-        if choice == 'N':
-            pass
+            if len(choice) > 1:
+                print('\nAnswer requires only one character\n')
+            elif choice not in choices:
+                print('\nPlease select either "Y" or "N" for an answer\n')
+            elif choice in choices:
+                valid = 1
 
-            # if str.isalpha(guess[0]) == False:
-            #     print('First co-ordinate must be a letter A-J.')
-            # elif guess[0].upper() not in grid_letters:
-            #     print('The first co-ordinate must be a letter A-J.')
-            # elif guess[1:] not in grid_numbers:
-            #     print('Second co-ordinate must be a number 1-10.')
-            # elif guess in guesses:
-            #     print('Grid location already fired upon, please select a new target.')
-            # else:
-            #     valid = 1
-            #     break
-    except:
-        print('Incorrect input, please try a new co-ordinate.\nFor example "D7"')
+        except TypeError:
+            print('\nIncorrect input, please try answering "Y" or "N"\n')
     
     return choice
 
+def player_creation(**ships_player):
+
+    ship_start = input()
