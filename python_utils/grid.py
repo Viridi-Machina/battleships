@@ -37,7 +37,7 @@ bl_corner = '\u2517'
 spacer = ' '
 
 # Empty circle for grid co-ordinates
-grid = f'{water}\U0001F785{reset}{spacer}'
+grid = f'{water}\U0001F785{reset}{spacer*2}'
 
 # Star indicate hit
 hit = f'{fire}\U0001F7D2{reset}{spacer}'
