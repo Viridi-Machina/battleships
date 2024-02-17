@@ -89,7 +89,7 @@ def validate_guess(guesses):
     valid = 0
     while valid == 0:
         try:
-            user_guess = input('Select a co-ordinate to launch a missile: \n')
+            user_guess = input('Select a co-ordinate to launch a missile:\n')
             guess = user_guess.upper().strip()
             if str.isalpha(guess[0]) is False:
                 print('First co-ordinate must be a letter A-J.')
