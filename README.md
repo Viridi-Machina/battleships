@@ -1,32 +1,106 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+## :purple_circle: Deployment
 
-Welcome,
+When deploying to Heroku, there are some essential steps that must be taken to ensure functionality of the deployed site:
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+### Add dependancies to `requirements.txt`:
+<details>
+ <summary>Method :purple_circle:</summary>
 
-## Reminders
+- If any packages have been installed and used within a given project, then these need to be catalogued in a requirements.txt file.<br>
+This can be done by entering the following command in the workspace terminal:
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+      pip3 freeze > requirements.txt
+  If you are using VS Code you can the following command instead:
 
-## Creating the Heroku app
+      py -m pip freeze > requirements.txt 
+  Please note however that this method will pull all current dependancies in your project, *as well* as their respective dependancies as well.<br>
+  It may be more ideal to manually populate your requirements.txt file as you have greater control such as version control.
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+  Commit these changes and push them to your Github repository.
+</details>
 
-1. `heroku/python`
-2. `heroku/nodejs`
+### Create Heroku account:
+<details>
+ <summary>Method :purple_circle:</summary>
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+- First, you will need to visit the Heroku site and log in. If you do not have an account yet then click `Sign Up` and follow their instructions.
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+      https://id.heroku.com/login
+    <details>
+     <summary>Login Screen :mag:</summary>
+ 
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/c9a0efb3-f071-411e-9eea-144d391bea06)
+    </details>
+    
+- When logging in, as an added security measure you will need to use an authenticator app in tandem with the site so that you can proceed<br>
+  to the dashboard. You will need to make sure you download the `Salesforce Authenticator` app from you respective mobile marketplace.
 
-Connect your GitHub repository and deploy as normal.
+    <details>
+     <summary>Authentication Screen :mag:</summary>
+ 
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/5b99b35a-9bd6-434c-9caf-43a2620f7c70)
+    </details>
 
-## Constraints
+- Finally you will arrive at the `Heroku Dashboard` where you will be able to deploy your app.
+</details>
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+### Create new app:
+<details>
+ <summary>Method :purple_circle:</summary>
 
----
+- From the dashboard you will be able to see your deployed projects. Click on `New`, then `Create new app`:
+  <details>
+    <summary>Dashboard :mag:</summary>
+    
+    ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/d4468782-45f9-4c26-8369-1ddffee2b408)
+  </details>
 
-Happy coding!
+- Enter a unique `App name` and `Choose a region`, then click `Create app`.<br>
+  Once created you navigate to the `Settings` menu.
+  <details>
+    <summary>App Dashboard :mag:</summary>
+
+    ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/fde9249a-f073-46af-aeff-ddf4b7d6aacf)
+  </details>
+  
+- Within the `Settings` menu, navigate to `Config Vars` (Also known as *Environment Variables*).<br>
+  This is where private and sensitive data, such as credentials and keys, will be stored for the project.
+  <details>
+    <summary>App Settings :mag:</summary>
+
+    ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/078e131f-0ec6-483f-9031-7049385cdad8)
+  </details>
+
+- If the project is dependant on a creds.json file, then this is where the data will be stored.
+- Click `Reveal Config Vars`. Type in the first `KEY`: 'CREDS'.<br>
+  For the `VALUE` paste in the contents of your creds.json file from the IDE that you are using.
+- It is also important to set another KEY, VALUE pair as `PORT`, `8000` respectively<br>
+  or the project may not properly deploy.
+  <details>
+    <summary>Config Vars :mag:</summary>
+    
+    ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/0721287b-f32f-4b37-be16-ddcf1cfeb1c2)
+  </details>
+
+- Next, some `Buildpacks` will need to be added which will add further dependancies outisde of the project<br>
+  which will allow the deployment to run in a virtual environment.
+- First, click `Add buildpack` and select `python`. Then add `nodejs`. It is important that you do it in this order.<br>
+  The ordering however can be changed afterwords by dragging their burger icons within the buildpacks list.
+  <details>
+    <summary>Buildpacks :mag:</summary>
+ 
+    ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/d7a30ca4-e36a-44eb-8e87-5626e84e7e25)
+  </details>
+</details>
+
+### Connect to GitHub and deploy:
+<details>
+  <summary>Method :purple_circle:</summary>
+
+  - Navigate to the `Deploy` menu. For `Deployment method` select GitHub. Finally, you can manually deploy the project.
+    <details>
+      <summary>Deploy Menu :mag:</summary>
+
+    ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/9081df0b-d551-40f2-b9c1-f770b9d4a5fb)
+    </details>
+</details>
