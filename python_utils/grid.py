@@ -40,10 +40,10 @@ spacer = ' '
 grid = f'{water}\U0001F785{reset}{spacer*2}'
 
 # Star indicate hit
-hit = f'{fire}\U0001F7D2{reset}{spacer}'
+hit = f'{fire}\U0001F7D2{reset}{spacer*2}'
 
 # Cross to indicate miss
-miss = f'{Fore.WHITE}\U0001F7AC{reset}{spacer}'
+miss = f'{Fore.WHITE}\U0001F7AC{reset}{spacer*2}'
 
 # Solid circle to display player ship or sunken enemy ship
 ship_player_display = f'{player}\u2B24{reset}{spacer*2}'
