@@ -1,7 +1,7 @@
 
-import time
-
 from art import *
+
+import time
 
 from python_utils.grid import *
 from python_utils.computer import *
@@ -148,17 +148,20 @@ def hit_or_miss(shot, shots, hits, misses, ship_sunk, **ships_cpu):
             miss = 0
             print(f'\n{fire}HIT! You have them in your scope,'
                   f'finish them.{reset}')
+            time.sleep(1)
 
             if all(ship_sunk_check):
                 ship_sunk.extend(ship)
                 ship = []
                 hits = [i for i in hits if i not in ship_sunk]
                 miss = 0
-                print(f'\nYou sunk my {name.upper()}!')
+                print(f'\nCPU: You sunk my {enemy}{name.upper()}!{reset}')
+                time.sleep(2)
 
     if miss == 1:
         misses.append(guess_conversion(shot))
         print('\nMiss. We should try another target')
+        time.sleep(1)
 
     shots.append(shot)
 
@@ -198,8 +201,8 @@ print(f'{fire}Welcome {name}, I wish you good luck!{reset}')
 time.sleep(2)
 
 # While loop resets the game after completion on user input
-reset = 1
-while reset == 1:
+reset_game = 1
+while reset_game == 1:
     # Ship creation and initial board display
     cpu_creation(**ships_player)
     cpu_creation(**ships_cpu)
@@ -244,4 +247,4 @@ while reset == 1:
             print(reset)
             break
 
-    reset = ask_to_reset()
+    reset_game = ask_to_reset()

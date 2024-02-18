@@ -28,37 +28,3 @@ def ask_to_reset():
         reset = 0
 
     return reset
-
-def reset_game():
-    '''
-    This function resets the game by setting all stats to their initial values.
-    '''
-    # Player score-card
-    hits_2 = []
-    misses_2 = []
-    guesses_2 = []
-    ship_sunk_2 = []
-
-    ships_player = {
-        'cruiser': [2.0],
-        'submarine': [3.0],
-        'destroyer': [3.1],
-        'battleship': [4.0],
-        'aircraft_carrier': [5.0]
-    }
-
-    # Computer score-card
-    hits = []
-    misses = []
-    guesses = []
-    ship_sunk = []
-    aim = []
-    missed = 0
-
-    ships_cpu = {
-        'cruiser': [2.0],
-        'submarine': [3.0],
-        'destroyer': [3.1],
-        'battleship': [4.0],
-        'aircraft_carrier': [5.0]
-    }

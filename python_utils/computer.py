@@ -1,9 +1,11 @@
 # The following code is mostly adapted from a python code tutorial video-series
 # from 'Dr Codie' on YouTube: https://www.youtube.com/@DrCodie
 
+from colorama import Fore, Style
+
 from random import randrange
 import math
-
+import time
 
 def validate_placement(ship, start, direction, in_use):
     '''
@@ -120,13 +122,17 @@ def cpu_turn(guesses, hits, misses, ship_sunk, aim, missed, **ships_player):
             hits.append(target)
             ship_sunk_check = [i in hits for i in ship]
             missed = 0
+            print(f'{Fore.YELLOW}We just took a hit!{Style.RESET_ALL}')
+            time.sleep(1)
 
             if all(ship_sunk_check):
                 ship_sunk.extend(ship)
                 ship = []
                 hits = [i for i in hits if i not in ship_sunk]
                 missed = 2
-                print(f'We just lost our {name.upper()}!')
+                print(f'We just lost our {Fore.LIGHTBLUE_EX}'
+                      f'{name.upper()}{Style.RESET_ALL}!')
+                time.sleep(2)
 
     if missed == 1:
         misses.append(target)
