@@ -24,6 +24,14 @@ Below is a demonstration of the game in action through to completion. Note that 
 
 https://github.com/Viridi-Machina/battleships/assets/146846939/c557dd08-c389-4faf-b16f-7a5896c3f6c5
 
+The above video is a clip of the desired output, which does run perfectly on the deployed Heroky site<br>
+from my personal computer and mobile. However, upon testing from my mentor during a project review session<br> 
+the site did not display properly on iOS via her Mac. It was discovered to be a font library issue with the<br>
+unicode symbols that had been used. The fix was to use different symbol codes to achieve a similar effect,<br>
+though the impact is not quite the same:
+
+https://github.com/Viridi-Machina/battleships/assets/146846939/c55d6afe-af0f-4634-9e6f-b92678459a82
+
 <hr>
 
 ## How to play
@@ -33,7 +41,6 @@ https://github.com/Viridi-Machina/battleships/assets/146846939/c557dd08-c389-4fa
 - Select your first target using the grid letters and numbers, e.g. 'B5'.<br>
   A function will convert the guess into a usable integer.
 - Playing against the computer, take turns guessing grid locations until all ships on either board have been sunk.
-- Complete the game and you will be asked if you want to play again.
 
 <hr>
 
@@ -144,9 +151,12 @@ In the video clip above, take note of how the computer makes decisions.
   <summary>Details :green_circle:</summary>
 
   ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/54e64f69-2044-4c06-82b0-ed775711aefb)
+  
+  <hr>
+  
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/6ff4dd68-152f-4cf3-8e0e-280c151eeb9b)
 
-  After completing the game, a final end-game screen will display whether you have won or lost,<br>
-  before asking if the player would like to replay the game.
+  After completing the game, a final end-game screen will display whether you have won or lost.
 </details>
 
 <hr>
@@ -163,7 +173,7 @@ In the video clip above, take note of how the computer makes decisions.
 <hr>
 
 ## Data Model
-For this project a package was created in a new directory called `python_utils`, containing 4 main modules that<br>
+For this project a package was created in a new directory called `python_utils`, containing 3 main modules that<br>
 would be imported to the main run.py file. This separates and organises the code in a more readable maner.
 
 - `stats.py` -> This module stores two libraries for the player and computer which containes their ships as well<br>
@@ -173,8 +183,6 @@ would be imported to the main run.py file. This separates and organises the code
 
 - `grid.py` -> This module acts a library for all grid construction elements to be used in the `display_grid()` function.<br>
   It also stores many variables created using colorama for repeat-use within the `run.py` file.
-
-- `player.py` -> This module stores a function asking the player if they would like to reset the game.
 
 - `computer.py` -> This module stores multiple computer-logic based functions for use in the `run.py` file.<br>
   Examples include the computer-aiming logic, ship creation (and it's validation) and computer-turn functions.
@@ -223,12 +231,6 @@ would be imported to the main run.py file. This separates and organises the code
 </details>
 
 <details>
-  <summary>player.py :mag:</summary>
-
-  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/f3e8a7e1-836d-4a74-a43b-c411d39ccfcf)
-</details>
-
-<details>
   <summary>grid.py :mag:</summary>
 
   ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/730e414b-50e1-499f-9fcd-6db0a356b02e)
@@ -238,6 +240,72 @@ would be imported to the main run.py file. This separates and organises the code
   <summary>computer.py :mag:</summary>
 
   ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/8660b84c-93b1-4941-a3fa-efaba3ff91d7)
+</details>
+
+### Manual Testing
+<details>
+  <summary>Details :mag:</summary>
+
+  - **Player Guess**
+    - Try hitting enter without typing
+      > *<class 'ValueError'>* ✔️
+    - Try typing '1'
+      > *First co-ordinate must be a letter A-J.* ✔️
+    - Try typing 'h11'
+      > *Second co-ordinate must be a number 1-10.* ✔️
+    - Try typing ' d8  '
+      > *Missile launched...* ✔️
+    - Try typing 'd8' again
+      > *Grid location already fired upon,please select a new target.* ✔️
+
+  - **Ship Sunk**
+    - Guess the last shot on an enemy ship
+      > `hits` list contents removed and transferred to `ship_sunk` list
+      > grid elements changed from `hit` to `ship_sunk` ✔️
+    - Enemy guesses last hit on player ship
+      > `hits` list contents removed and transferred to `ship_sunk` list
+      > grid elements changed from `hit` to `ship_sunk` ✔️
+
+- **Special Case**
+  - Player ship sunk adjacent to another ship with a hit
+    > Computer ai doesn't stay in a loop ✔️
+
+- **Full Game**
+  - Play until game end 20 times
+    > Computer ai doesn't stay in a loop more than once ✔️
+
+
+### Inputs
+All user inputs were tested with
+- Blank entry: expected re-prompt with hints of valid expectations
+- Leading and trail spacing: should be trimmed
+- Inputs are case insensitive so guesses can be valid as B1 or b1.
+
+### Game Play
+During development I was playing the game constantly in the terminal of my IDE, VS Cod as well as playing serveral rounds in the heroku deployment. Special attention was paid to the following game logic:
+- Misses are clearly identified from the grid as white x's.
+- Unguessed grids are empty circles
+- Hits are yellow stars
+- Sunk ships are triangles for the player and red circles for the computer
+- Player is given feedback on what type of ship has been sunk
+- The grid doesn't place overlapping ships
+- The grid doesn't place ships out of bounds
+- Player is warned if they guess the same square
+- Player is given feedback on the hit or miss status of a guess
+- The grid remains aligned as symbols change due to guesses
+- The game result is presented
+
+### Game Module
+- Player is first greeted with game rules and asked for their name
+- Player plays the game to completion
+- Player is given different colour prompts based on the situation (hit, miss, sunk, error)
+
+## Defects
+Defects were dealt with in real time.
+Some of the noteworthy defects were:
+- **skewed grid on initial heroku deployment** - 
+- **symbols didn't work for mac users** This ended up being a result of the unicode symbols not being present in the Arial font that was provided in the template layout.html styles.<br>
+  I switched them up until I found ones that worked (see updated video under summary)
 </details>
 
 <hr>
