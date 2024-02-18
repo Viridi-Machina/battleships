@@ -130,14 +130,28 @@ In the video clip above, take note of how the computer makes decisions.
   destroyed, the computer's aiming logic is reset and there may still be multiple<br>
   hits on the board.
 - The computer will use the hit information to continue making educated guesses.
+</details>
 
+
+### Feedback
+<details>
+  <summary>Details :green_circle:</summary>
+  
+ ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/529faec4-8cd1-43e3-b4d6-6a2b73fc1ac4)
+
+ Written feedback is given via the terminal when scoring a hit, miss, destroying a ship or having one of your own destroyed.<br>
+ In any case, colorama is used to emphasise whether the player or computer is affected, and a `time.sleeper()` method is<br>
+ used to allow the player to read the message for a second before the grid-display takes up the window space.
 </details>
 
 ### End-Game
 <details>
   <summary>Details :green_circle:</summary>
 
-  
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/54e64f69-2044-4c06-82b0-ed775711aefb)
+
+  After completing the game, a final end-game screen will display whether you have won or lost,<br>
+  before asking if the player would like to replay the game.
 </details>
 
 <hr>
