@@ -5,7 +5,6 @@ import time
 
 from python_utils.grid import *
 from python_utils.computer import *
-from python_utils.player import *
 from python_utils.stats import *
 
 
@@ -211,7 +210,7 @@ print(f'{spacer*11}- Lettered A-J on the x-axis\n'
       f'{spacer*11}- Numbered 1-10 on the y-axis\n'
       f'{spacer*11}- A suitable guess would be D8')
 print(f'{spacer*8}{fire}3){reset} The first one to sink all'
-      f'opposing ships wins\n')
+      f' opposing ships wins\n')
 
 given_name = input(f'{player}Please enter your name to start:{reset}\n')
 name = given_name.capitalize()
