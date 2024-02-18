@@ -156,6 +156,36 @@ In the video clip above, take note of how the computer makes decisions.
 
 <hr>
 
+## Future feature implementation
+- Allow the player to place their own ships
+- Allow the player to import ship placement from a given spreadsheet using an API
+- Display scores and other tracked statistics of the game on completion
+- Store these scores on an external spreadsheet with an email username using an API
+- Randomise ship layouts when playing again after the end-game
+- Allow player to use 'special weapons' that have an area of effect on the grid,<br>
+  when the player reaches a certain number of misses in a row
+
+<hr>
+
+## Data Model
+For this project a package was created in a new directory called `python_utils`, containing 4 main modules that<br>
+would be imported to the main run.py file. This separates and organises the code in a more readable maner.
+
+- `stats.py` -> This module stores two libraries for the player and computer which containes their ships as well<br>
+  as their respective ship names and grid co-ordinates. The module also stored player and computer specific variables<br>
+  that would be updated throughout the game - thus effectively being used as a class to draw from.
+  - This module is used to display the grid and execute most of the game's main functions.
+
+- `grid.py` -> This module acts a library for all grid construction elements to be used in the `display_grid()` function.<br>
+  It also stores many variables created using colorama for repeat-use within the `run.py` file.
+
+- `player.py` -> This module stores a function asking the player if they would like to reset the game.
+
+- `computer.py` -> This module stores multiple computer-logic based functions for use in the `run.py` file.<br>
+  Examples include the computer-aiming logic, ship creation (and it's validation) and computer-turn functions.
+  
+<hr>
+
 ## :purple_circle: Deployment
 
 When deploying to Heroku, there are some essential steps that must be taken to ensure functionality of the deployed site:
