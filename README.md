@@ -207,6 +207,41 @@ would be imported to the main run.py file. This separates and organises the code
 
 <hr>
 
+## Testing
+
+### PEP8 Validation (Using Code Institute Python Linter)
+<details>
+  <summary>run.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/947970c8-cc59-4fd9-ae33-b38df1c95002)
+</details>
+
+<details>
+  <summary>stats.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/06ea5e3f-d227-41ac-b0f8-809f7f24b13a)
+</details>
+
+<details>
+  <summary>player.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/f3e8a7e1-836d-4a74-a43b-c411d39ccfcf)
+</details>
+
+<details>
+  <summary>grid.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/730e414b-50e1-499f-9fcd-6db0a356b02e)
+</details>
+
+<details>
+  <summary>computer.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/8660b84c-93b1-4941-a3fa-efaba3ff91d7)
+</details>
+
+<hr>
+
 ## :purple_circle: Deployment
 
 When deploying to Heroku, there are some essential steps that must be taken to ensure functionality of the deployed site:
