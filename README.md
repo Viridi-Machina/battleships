@@ -42,12 +42,7 @@ https://github.com/Viridi-Machina/battleships/assets/146846939/c557dd08-c389-4fa
 - Markdown
 - Github
 - Heroku
-- Python packages:
-  - math
-  - time
-  - art (large print-fonts)
-  - colorama (colour-print)
-  - random (randrange)
+- Lucidchart
 
 <hr>
 
@@ -184,6 +179,28 @@ would be imported to the main run.py file. This separates and organises the code
 - `computer.py` -> This module stores multiple computer-logic based functions for use in the `run.py` file.<br>
   Examples include the computer-aiming logic, ship creation (and it's validation) and computer-turn functions.
   
+<hr>
+
+## Design Documents
+<details>
+  <summary>View Wireframe (flowchart)</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/d6b63b7a-7902-49e7-8004-2996893421ba)
+</details>
+
+<hr>
+
+## Python libraries
+  - **math** -> `math.floor()` method used on floats which are used as an index for matching a ship in a dictionary<br>
+    and it's corresponding ship co-ordinate list. The use of floats allows specific matching for two different<br>
+    ships of different names which both have a list length of 3. Thus 3.0 and 3.1 allows differentiation.
+  - **time** -> `time.sleep()` method used to set a delay after feedback is given, so it can be read before the grid<br>
+    fills the majority of the console (pushing the text up).
+  - **art** (large print-fonts) -> 3rd party package `art` is used to `tprint()` large text such as that used in<br>
+    the welcome and end-game screens.
+  - **colorama** (colour-print) -> Colour is used throughout the game to improve readability and improve engagement.
+  - **random** (randrange) -> `randrange()` method is used to help generate ship locations and the computer's guesses.
+
 <hr>
 
 ## :purple_circle: Deployment
