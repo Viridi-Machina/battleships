@@ -1,6 +1,10 @@
 # BATTLESHIPS
+![image](https://github.com/Viridi-Machina/battleships/assets/146846939/b05960af-ba25-475e-a6e6-46e95b1d656d)
 
-amiresponsive image here
+![image](https://github.com/Viridi-Machina/battleships/assets/146846939/098f8c7a-847c-494e-be9b-0d7110c2c262)
+
+## Author
+Jacen Green
 
 ## Visit the repository [here](https://github.com/Viridi-Machina/battleships) or view on a live terminal [here](https://battleships-v-a3fa1471e145.herokuapp.com/)
 
@@ -15,6 +19,11 @@ The player and computer take turns firing until all ships on a grid have been su
 
 The player's ships are displayed on the grid with a :large_blue_circle:, whilst enemy ships once fully destroyed display as a :red_circle:.
 *Visual and colourful* feedback is also given as fiery explosions for hits, with misses displaying as a white 'X' as to not overstimulate the grid with too much colour.
+
+Below is a demonstration of the game in action through to completion. Note that as battleships can be a long game this process has been sped up:
+
+https://github.com/Viridi-Machina/battleships/assets/146846939/c557dd08-c389-4faf-b16f-7a5896c3f6c5
+
 
 ## :purple_circle: Deployment
 
