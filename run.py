@@ -206,7 +206,7 @@ while reset == 1:
     display_grid(**ships_player)
 
     # Main game loop
-    for i in range(1):
+    for i in range(100):
         guess = validate_guess(guesses_2)
         guess_conversion(guess)
 
