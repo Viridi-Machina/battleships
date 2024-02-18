@@ -24,6 +24,8 @@ Below is a demonstration of the game in action through to completion. Note that 
 
 https://github.com/Viridi-Machina/battleships/assets/146846939/c557dd08-c389-4faf-b16f-7a5896c3f6c5
 
+<hr>
+
 ## How to play
 - Go to the deployed terminal [here](https://battleships-v-a3fa1471e145.herokuapp.com/) via Heroku.
 - Click 'Run Program' and the terminal will open in a virtual environment using the Code Institute template.
@@ -33,17 +35,16 @@ https://github.com/Viridi-Machina/battleships/assets/146846939/c557dd08-c389-4fa
 - Playing against the computer, take turns guessing grid locations until all ships on either board have been sunk.
 - Complete the game and you will be asked if you want to play again.
 
+<hr>
+
 ## Technologies used
 - Python3
 - Markdown
 - Github
 - Heroku
-- Python packages:
-  - math
-  - time
-  - art (large print-fonts)
-  - colorama (colour-print)
-  - random (randrange)
+- Lucidchart
+
+<hr>
 
 ## :green_circle: Features
 ### Game welcome screen
@@ -73,13 +74,17 @@ Using 'colorama', a simple instructions screen teaches the player how to play wi
 
 The heart of the game. Perhaps the most time-consuming aspect of the game to complete.<br>
 - The `display_grid()` function simultaneously creates two grids adjacent to one another.
+
 - On every line that is printed, each grid element is assigned a grid value 11-110.<br>
   11-110 because each axis starts at 1, including the letter A.
+
 - Each grid element is then checked against variables defined in and imported from another<br>
   Python file called `stats.py`. This effectively acts as a class for the player and<br>
   computer's respective ship co-ordinates, hits, misses etc.
+
 - Every grid element is then assigned a unicode symbol depending on whether it is recorded<br>
   as a hit, miss or if a ship has been completely destroyed.
+
 - The decorative elements - border and axes - are construced around the grid using another<br>
   imported file called `grid.py`, which acts as the library for all grid elements and<br>
   colour-changing variables.
@@ -102,6 +107,141 @@ The heart of the game. Perhaps the most time-consuming aspect of the game to com
   ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/5a0070fe-63b0-4fa8-b813-bb26751e25fa)
  </details>
 </details>
+
+### Smart computer logic
+<details>
+  <summary>Details :green_circle:</summary>
+
+https://github.com/Viridi-Machina/battleships/assets/146846939/1f6d3838-cd70-4ec8-848c-135564750004
+
+In the video clip above, take note of how the computer makes decisions. 
+- Upon landing a hit, it will think of surrounding spaces that could result in a hit.
+- At random, one of those guesses will be chosen. If it misses, it tries again.
+- Upon another hit, the computer will work out the direction the ship is facing.
+- It will keep firing until the ship is destroyed, then guess again at random.
+
+*Special case*
+- In the event that two player-ships are adjacent to one another, a ship may be<br>
+  destroyed, the computer's aiming logic is reset and there may still be multiple<br>
+  hits on the board.
+- The computer will use the hit information to continue making educated guesses.
+</details>
+
+
+### Feedback
+<details>
+  <summary>Details :green_circle:</summary>
+  
+ ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/529faec4-8cd1-43e3-b4d6-6a2b73fc1ac4)
+
+ Written feedback is given via the terminal when scoring a hit, miss, destroying a ship or having one of your own destroyed.<br>
+ In any case, colorama is used to emphasise whether the player or computer is affected, and a `time.sleeper()` method is<br>
+ used to allow the player to read the message for a second before the grid-display takes up the window space.
+</details>
+
+### End-Game
+<details>
+  <summary>Details :green_circle:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/54e64f69-2044-4c06-82b0-ed775711aefb)
+
+  After completing the game, a final end-game screen will display whether you have won or lost,<br>
+  before asking if the player would like to replay the game.
+</details>
+
+<hr>
+
+## Future feature implementation
+- Allow the player to place their own ships
+- Allow the player to import ship placement from a given spreadsheet using an API
+- Display scores and other tracked statistics of the game on completion
+- Store these scores on an external spreadsheet with an email username using an API
+- Randomise ship layouts when playing again after the end-game
+- Allow player to use 'special weapons' that have an area of effect on the grid,<br>
+  when the player reaches a certain number of misses in a row
+
+<hr>
+
+## Data Model
+For this project a package was created in a new directory called `python_utils`, containing 4 main modules that<br>
+would be imported to the main run.py file. This separates and organises the code in a more readable maner.
+
+- `stats.py` -> This module stores two libraries for the player and computer which containes their ships as well<br>
+  as their respective ship names and grid co-ordinates. The module also stored player and computer specific variables<br>
+  that would be updated throughout the game - thus effectively being used as a class to draw from.
+  - This module is used to display the grid and execute most of the game's main functions.
+
+- `grid.py` -> This module acts a library for all grid construction elements to be used in the `display_grid()` function.<br>
+  It also stores many variables created using colorama for repeat-use within the `run.py` file.
+
+- `player.py` -> This module stores a function asking the player if they would like to reset the game.
+
+- `computer.py` -> This module stores multiple computer-logic based functions for use in the `run.py` file.<br>
+  Examples include the computer-aiming logic, ship creation (and it's validation) and computer-turn functions.
+  
+<hr>
+
+## Design Documents
+<details>
+  <summary>View Wireframe (flowchart)</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/d6b63b7a-7902-49e7-8004-2996893421ba)
+</details>
+
+<hr>
+
+## Python libraries
+  - **math** -> `math.floor()` method used on floats which are used as an index for matching a ship in a dictionary<br>
+    and it's corresponding ship co-ordinate list. The use of floats allows specific matching for two different<br>
+    ships of different names which both have a list length of 3. Thus 3.0 and 3.1 allows differentiation.
+
+  - **time** -> `time.sleep()` method used to set a delay after feedback is given, so it can be read before the grid<br>
+    fills the majority of the console (pushing the text up).
+
+  - **art** (large print-fonts) -> 3rd party package `art` is used to `tprint()` large text such as that used in<br>
+    the welcome and end-game screens.
+
+  - **colorama** (colour-print) -> Colour is used throughout the game to improve readability and improve engagement.
+
+  - **random** (randrange) -> `randrange()` method is used to help generate ship locations and the computer's guesses.
+
+<hr>
+
+## Testing
+
+### PEP8 Validation (Using Code Institute Python Linter)
+<details>
+  <summary>run.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/947970c8-cc59-4fd9-ae33-b38df1c95002)
+</details>
+
+<details>
+  <summary>stats.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/06ea5e3f-d227-41ac-b0f8-809f7f24b13a)
+</details>
+
+<details>
+  <summary>player.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/f3e8a7e1-836d-4a74-a43b-c411d39ccfcf)
+</details>
+
+<details>
+  <summary>grid.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/730e414b-50e1-499f-9fcd-6db0a356b02e)
+</details>
+
+<details>
+  <summary>computer.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/8660b84c-93b1-4941-a3fa-efaba3ff91d7)
+</details>
+
+<hr>
+
 ## :purple_circle: Deployment
 
 When deploying to Heroku, there are some essential steps that must be taken to ensure functionality of the deployed site:
@@ -208,3 +348,23 @@ This can be done by entering the following command in the workspace terminal:
     ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/9081df0b-d551-40f2-b9c1-f770b9d4a5fb)
     </details>
 </details>
+
+<hr>
+
+## Credits
+
+- [Code institute](https://github.com/Viridi-Machina/python_template)<br>
+  Template used for a working terminal to display when deployed to Heroku
+  
+- [Stack Overflow](https://stackoverflow.com/)<br>
+  Various articles which helped with the process of creating a python package with a `__init__.py` file,<br>
+  and how to import from the directory.
+  
+- Tutorials by [Dr Codie on YouTube](https://www.youtube.com/watch?v=Ej7I8BPw7Gk&list=PLpeS0xTwoWAsn3SwQbSsOZ26pqZ-0CG6i&ab_channel=DrCodie)<br>
+  This specific video series showed me what could be possible with a battleships game only with python,<br>
+  and was the direct inspiration for the code produced for this project - albeit difficult to adapt<br>
+  with object-oriented programming in mind.
+
+## Acknowledgements
+- Malia Havlicek for her continued support and essential advice.
+- The community on Stack Overflow for helping to answer so many small isssues and questions I come across.
