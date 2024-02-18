@@ -24,7 +24,84 @@ Below is a demonstration of the game in action through to completion. Note that 
 
 https://github.com/Viridi-Machina/battleships/assets/146846939/c557dd08-c389-4faf-b16f-7a5896c3f6c5
 
+## How to play
+- Go to the deployed terminal [here](https://battleships-v-a3fa1471e145.herokuapp.com/) via Heroku.
+- Click 'Run Program' and the terminal will open in a virtual environment using the Code Institute template.
+- Enter a username.
+- Select your first target using the grid letters and numbers, e.g. 'B5'.<br>
+  A function will convert the guess into a usable integer.
+- Playing against the computer, take turns guessing grid locations until all ships on either board have been sunk.
+- Complete the game and you will be asked if you want to play again.
 
+## Technologies used
+- Python3
+- Markdown
+- Github
+- Heroku
+- Python packages:
+  - math
+  - time
+  - art (large print-fonts)
+  - colorama (colour-print)
+  - random (randrange)
+
+## :green_circle: Features
+### Game welcome screen
+<details>
+ <summary>Details :green_circle:</summary>
+ 
+![image](https://github.com/Viridi-Machina/battleships/assets/146846939/56703510-b6a6-4669-be39-60c75f3b1060)
+
+Using a combination of the 'colorama' and 'art' packages, as well as block strings, a colourful and bold welcome screen was produced.<br>
+It was designed to be as engaging as possible given the limitations of the terminal environment.
+</details>
+
+### Instructions
+<details>
+ <summary>Details :green_circle:</summary>
+ 
+![image](https://github.com/Viridi-Machina/battleships/assets/146846939/d1cf4c30-b5f1-4a7b-a6b5-819bb44a2012)
+
+Using 'colorama', a simple instructions screen teaches the player how to play within the terminal.
+</details>
+
+### The game board
+<details>
+ <summary>Details :green_circle:</summary>
+ 
+![image](https://github.com/Viridi-Machina/battleships/assets/146846939/b2d12a77-f295-486e-9647-bd29c3da5062)
+
+The heart of the game. Perhaps the most time-consuming aspect of the game to complete.<br>
+- The `display_grid()` function simultaneously creates two grids adjacent to one another.
+- On every line that is printed, each grid element is assigned a grid value 11-110.<br>
+  11-110 because each axis starts at 1, including the letter A.
+- Each grid element is then checked against variables defined in and imported from another<br>
+  Python file called `stats.py`. This effectively acts as a class for the player and<br>
+  computer's respective ship co-ordinates, hits, misses etc.
+- Every grid element is then assigned a unicode symbol depending on whether it is recorded<br>
+  as a hit, miss or if a ship has been completely destroyed.
+- The decorative elements - border and axes - are construced around the grid using another<br>
+  imported file called `grid.py`, which acts as the library for all grid elements and<br>
+  colour-changing variables.
+
+ <details>
+  <summary>display_grid() :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/33cfc449-46b1-4918-a284-701c2cf15cda)
+ </details>
+
+ <details>
+  <summary>stats.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/e8e668f2-bf9f-43ae-93a9-18d50437cdf3)
+ </details>
+
+ <details>
+  <summary>grid.py :mag:</summary>
+
+  ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/5a0070fe-63b0-4fa8-b813-bb26751e25fa)
+ </details>
+</details>
 ## :purple_circle: Deployment
 
 When deploying to Heroku, there are some essential steps that must be taken to ensure functionality of the deployed site:
