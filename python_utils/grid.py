@@ -1,5 +1,5 @@
-#          Grid construction elements (Using unicode characters)              
-# ___________________________________________________________________________ 
+#          Grid construction elements (Using unicode characters)
+# ___________________________________________________________________________
 
 from colorama import Fore, Style
 
@@ -37,20 +37,20 @@ bl_corner = '\u2517'
 spacer = ' '
 
 # Empty circle for grid co-ordinates
-grid = f'{water}\U0001F785{reset}{spacer*2}'
+grid = f'{water}\u25cb{reset}{spacer*2}'
 
 # Star indicate hit
-hit = f'{fire}\U0001F7D2{reset}{spacer*2}'
+hit = f'{fire}\u263c{reset}{spacer*2}'
 
 # Cross to indicate miss
-miss = f'{Fore.WHITE}\U0001F7AC{reset}{spacer*2}'
+miss = f'{Fore.WHITE}\u0058{reset}{spacer*2}'
 
 # Solid circle to display player ship or sunken enemy ship
-ship_player_display = f'{player}\u2B24{reset}{spacer*2}'
-sunk_2 = f'{enemy}\u2B24{reset}{spacer*2}'
+ship_player_display = f'{player}\u25cf{reset}{spacer*2}'
+sunk_2 = f'{enemy}\u25cf{reset}{spacer*2}'
 
 # Circle with X to indicate hit on player
-sunk_player = f'{player}\u2BBE{reset}{spacer*2}'
+sunk_player = f'{player}\u25bc{reset}{spacer*2}'
 
 grid_title_player = f'\n{spacer*13}{player}PLAYER GRID{reset}'
 grid_title_both = f'{grid_title_player}{spacer*31}{enemy}ENEMY GRID{reset}'

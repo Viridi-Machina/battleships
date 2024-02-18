@@ -9,7 +9,7 @@ def ask_to_reset():
         choices = ['Y', 'N']
         try:
             manual_placement = input('Would you like to play again? Y / N\n')
-            
+
             choice = manual_placement.upper().strip()
 
             if choice == '':
@@ -21,7 +21,7 @@ def ask_to_reset():
 
         except TypeError:
             print('\nIncorrect input, please try answering "Y" or "N"\n')
-    
+
     if choice == 'Y':
         reset = 1
     elif choice == 'N':

@@ -7,6 +7,7 @@ from random import randrange
 import math
 import time
 
+
 def validate_placement(ship, start, direction, in_use):
     '''
     This function uses the randomly generated starting points and directions
@@ -23,6 +24,7 @@ def validate_placement(ship, start, direction, in_use):
         for i in range(math.floor(ship)):
             x.append(start + i)
         x = ship_valid(x, in_use)
+
     elif direction == 2:
         for i in range(math.floor(ship)):
             x.append(start + i*10)
@@ -56,7 +58,7 @@ def ship_valid(x, in_use):
 
 def cpu_creation(**ships_cpu):
     '''
-    This function uses random number generation to assign assign co-ordinates
+    This function uses random number generation to assign co-ordinates
     for the computer's ships on the grid.
 
     Each ship is created through a loop
@@ -159,6 +161,8 @@ def cpu_assist(aim, guesses, hits):
         if len(hits) <= 1:
             break
 
+        # If there are adjacent hits on the board, the following
+        # code creates potential shots in the correct direction.
         if guesses[i] in hits and guesses[i] + 1 in hits:
             logic.append(guesses[i] - 1)
         if guesses[i] in hits and guesses[i] + 10 in hits:

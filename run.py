@@ -14,10 +14,16 @@ def display_grid(**player):
     This function displays the updated grid for the player and the opponent;
     showing any hits and misses on the board, as well as the player's ships.
 
-    Two for loops create a grid that scales based on the defined grid_size
+    Two nested for loops create two grids based on the defined grid_size
     variable. This is repeated for the opponent's grid.
     Adapted from a python code tutorial video-series from
     'Dr Codie' on YouTube: https://www.youtube.com/@DrCodie
+
+    For the player grid only the ships_player dictionary is unpacked with a
+    unique grid element which displays the ship locations at all times.
+
+    Many str. variables such as {vertical}, {spacer}, {grid_bottom} are
+    imported from the grid.py module for use in grid construction.
     '''
     # Forms grid top
     print('\n', grid_title_both)
@@ -45,9 +51,12 @@ def display_grid(**player):
             elif grid_player in ship_sunk:
                 grid_x = sunk_player
 
+            # The 2 lines of code below build the grid elements
+            # individually and assign them values 11-110.
             grid_row = grid_row + grid_x
             grid_player = grid_player + 1
 
+        # This line of code builds an entire row for every letter
         row = f'{vertical}{spacer*2}{grid_row}{spacer}{vertical}'
 
         # Computer Grid
@@ -67,6 +76,7 @@ def display_grid(**player):
 
         row_2 = f'{vertical_2}{spacer*2}{grid_row_2}{spacer}{vertical_2}'
 
+        # This final print statement adds the two rows together before display
         print(grid_letters[letter], row, spacer*3, grid_letters[letter], row_2)
 
     # Forms grid bottom
@@ -89,6 +99,7 @@ def validate_guess(guesses):
         try:
             user_guess = input('Select a co-ordinate to launch a missile:\n')
             guess = user_guess.upper().strip()
+
             if str.isalpha(guess[0]) is False:
                 print('First co-ordinate must be a letter A-J.')
             elif guess[0].upper() not in grid_letters:
@@ -101,10 +112,11 @@ def validate_guess(guesses):
             else:
                 valid = 1
                 break
-        except:
+        except ValueError:
             print('Incorrect input, please try a new co-ordinate.\n'
                   'For example "D7"')
 
+    # With a valid guess, feedback is given to the player.
     print(f'\nTarget locked: {enemy}{guess}{reset}')
     print(f'{fire}Missile launched...{reset}')
     return guess
@@ -142,10 +154,12 @@ def hit_or_miss(shot, shots, hits, misses, ship_sunk, **ships_cpu):
     '''
     miss = 1
     for name, ship in ships_cpu.items():
+
         if guess_conversion(shot) in ship:
             hits.append(guess_conversion(shot))
             ship_sunk_check = [i in hits for i in ship]
             miss = 0
+
             print(f'\n{fire}HIT! You have them in your scope,'
                   f'finish them.{reset}')
             time.sleep(1)
@@ -167,7 +181,8 @@ def hit_or_miss(shot, shots, hits, misses, ship_sunk, **ships_cpu):
 
     return shots, ships_cpu, hits, misses, ship_sunk
 
-# Welcome Screen with instructions
+
+# Welcome Screen logo
 print(f'{player}   ▄ ▄▄ ▄▄▄ ▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄'
       f'▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄ ▄▄▄ ▄▄ ▄')
 
@@ -175,6 +190,7 @@ print(f'| █ ██ ███ █████ ██████████ �
       f'{fire} WELCOME TO {player}',
       f'████ ██████████ █████ ███ ██ █ |{fire}')
 
+# tprint() method from 'art' package
 tprint('   - BATTLESHIPS -', font='block-medium')
 
 print(f'{player}| █ ██ ███ █████ ████████',
@@ -192,7 +208,7 @@ print(f'{spacer*8}{fire}2){reset} The board is a 10x10 grid:')
 print(f'{spacer*11}- Lettered A-J on the x-axis\n'
       f'{spacer*11}- Numbered 1-10 on the y-axis\n'
       f'{spacer*11}- A suitable guess would be D8')
-print(f'{spacer*8}{fire}3){reset} The first one to sink all' 
+print(f'{spacer*8}{fire}3){reset} The first one to sink all'
       f'opposing ships wins\n')
 
 given_name = input(f'{player}Please enter your name to start:{reset}\n')
@@ -213,19 +229,32 @@ while reset_game == 1:
         guess = validate_guess(guesses_2)
         guess_conversion(guess)
 
+        # Code mainly taken 'from Dr Codie'.
+        # Although it is difficult to read, especially with the maximum line
+        # length, this equates a number of global variables to the same
+        # ammount of return values within the function.
+        #
+        # Within the function, all of these variables are checked and
+        # potentially changed depending on the most recent guess.
+        # The function itself is fairly simple, see def above.
         (guesses_2, ships_cpu,
-        hits_2, misses_2,
-        ship_sunk_2) = hit_or_miss(guess, guesses_2, hits_2, 
-                                misses_2, ship_sunk_2, **ships_cpu)
+         hits_2, misses_2,
+         ship_sunk_2) = hit_or_miss(guess, guesses_2, hits_2,
+                                    misses_2, ship_sunk_2, **ships_cpu)
 
         (guesses, ships_player,
-        hits, misses,
-        ship_sunk, missed) = cpu_turn(guesses, hits, misses, 
-                            ship_sunk, aim, missed, **ships_player)
+         hits, misses,
+         ship_sunk, missed) = cpu_turn(guesses, hits, misses,
+                                       ship_sunk, aim, missed, **ships_player)
 
         display_grid(**ships_player)
-        
-        
+
+        # While hits remain in the list:
+        # (before being transferred to the ship_sunk list)
+        # the computer finishes its aiming logic
+        #
+        # If there are no hits on the grid, and the last shot
+        # was a miss, then the computer resumes random aiming.
         if missed == 0 or len(hits) > 1:
             aim = cpu_assist(aim, guesses, hits)
         if missed == 2 and len(hits) == 0:
