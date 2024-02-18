@@ -100,7 +100,9 @@ def validate_guess(guesses):
             user_guess = input('Select a co-ordinate to launch a missile:\n')
             guess = user_guess.upper().strip()
 
-            if str.isalpha(guess[0]) is False:
+            if user_guess == '':
+                print(ValueError)
+            elif str.isalpha(guess[0]) is False:
                 print('First co-ordinate must be a letter A-J.')
             elif guess[0].upper() not in grid_letters:
                 print('The first co-ordinate must be a letter A-J.')
