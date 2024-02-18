@@ -194,11 +194,15 @@ would be imported to the main run.py file. This separates and organises the code
   - **math** -> `math.floor()` method used on floats which are used as an index for matching a ship in a dictionary<br>
     and it's corresponding ship co-ordinate list. The use of floats allows specific matching for two different<br>
     ships of different names which both have a list length of 3. Thus 3.0 and 3.1 allows differentiation.
+
   - **time** -> `time.sleep()` method used to set a delay after feedback is given, so it can be read before the grid<br>
     fills the majority of the console (pushing the text up).
+
   - **art** (large print-fonts) -> 3rd party package `art` is used to `tprint()` large text such as that used in<br>
     the welcome and end-game screens.
+
   - **colorama** (colour-print) -> Colour is used throughout the game to improve readability and improve engagement.
+
   - **random** (randrange) -> `randrange()` method is used to help generate ship locations and the computer's guesses.
 
 <hr>
@@ -309,3 +313,23 @@ This can be done by entering the following command in the workspace terminal:
     ![image](https://github.com/Viridi-Machina/battleships/assets/146846939/9081df0b-d551-40f2-b9c1-f770b9d4a5fb)
     </details>
 </details>
+
+<hr>
+
+## Credits
+
+- [Code institute](https://github.com/Viridi-Machina/python_template)<br>
+  Template used for a working terminal to display when deployed to Heroku
+  
+- [Stack Overflow](https://stackoverflow.com/)<br>
+  Various articles which helped with the process of creating a python package with a `__init__.py` file,<br>
+  and how to import from the directory.
+  
+- Tutorials by [Dr Codie on YouTube](https://www.youtube.com/watch?v=Ej7I8BPw7Gk&list=PLpeS0xTwoWAsn3SwQbSsOZ26pqZ-0CG6i&ab_channel=DrCodie)<br>
+  This specific video series showed me what could be possible with a battleships game only with python,<br>
+  and was the direct inspiration for the code produced for this project - albeit difficult to adapt<br>
+  with object-oriented programming in mind.
+
+## Acknowledgements
+- Malia Havlicek for her continued support and essential advice.
+- The community on Stack Overflow for helping to answer so many small isssues and questions I come across.
