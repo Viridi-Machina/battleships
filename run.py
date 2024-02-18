@@ -1,7 +1,5 @@
-# Track score and save user email for login, store
-# score and user information on external sheet
-# With enough time, allow import from external sheet
-# (with link for users) to import ship placement
+
+import time
 
 from art import *
 
@@ -166,10 +164,9 @@ def hit_or_miss(shot, shots, hits, misses, ship_sunk, **ships_cpu):
 
     return shots, ships_cpu, hits, misses, ship_sunk
 
-
-print(player)
-print('   ▄ ▄▄ ▄▄▄ ▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄'
-      '▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄ ▄▄▄ ▄▄ ▄')
+# Welcome Screen with instructions
+print(f'{player}   ▄ ▄▄ ▄▄▄ ▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄'
+      f'▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄ ▄▄▄ ▄▄ ▄')
 
 print(f'| █ ██ ███ █████ ██████████ ████',
       f'{fire} WELCOME TO {player}',
@@ -181,50 +178,70 @@ print(f'{player}| █ ██ ███ █████ ████████'
       f'{fire} A GAME BY VIRIDI MACHINA {player}',
       f'████████ █████ ███ ██ █ |')
 
-print('   █ ▄▄ ▄▄▄ ▄▄▄▄▄ █▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄█ ▄▄▄ ▄▄ █')
+print(f'   █ ▄▄ ▄▄▄ ▄▄▄▄▄ █▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄▄',
+      f'▄▄▄▄▄▄▄▄▄ ▄▄▄▄▄▄▄▄▄▄ ▄▄▄▄█ ▄▄▄ ▄▄ █{reset}\n')
 
+# How to play
+print(f'{spacer*4}{fire}How to play the game:{reset}')
+print(f'{spacer*8}{fire}1){reset} Take turns against the computer'
+      f' firing on their grid.')
+print(f'{spacer*8}{fire}2){reset} The board is a 10x10 grid:')
+print(f'{spacer*11}- Lettered A-J on the x-axis\n'
+      f'{spacer*11}- Numbered 1-10 on the y-axis\n'
+      f'{spacer*11}- A suitable guess would be D8')
+print(f'{spacer*8}{fire}3){reset} The first one to sink all' 
+      f'opposing ships wins\n')
 
+given_name = input(f'{player}Please enter your name to start:{reset}\n')
+name = given_name.capitalize()
+print(f'{fire}Welcome {name}, I wish you good luck!{reset}')
+time.sleep(2)
 
-cpu_creation(**ships_player)
-
-cpu_creation(**ships_cpu)
-
-display_grid(**ships_player)
-
-
-for i in range(100):
-    guess = validate_guess(guesses_2)
-    guess_conversion(guess)
-
-    (guesses_2, ships_cpu,
-    hits_2, misses_2,
-    ship_sunk_2) = hit_or_miss(guess, guesses_2, hits_2, 
-                              misses_2, ship_sunk_2, **ships_cpu)
-
-    (guesses, ships_player,
-    hits, misses,
-    ship_sunk, missed) = cpu_turn(guesses, hits, misses, 
-                         ship_sunk, aim, missed, **ships_player)
-
+# While loop resets the game after completion on user input
+reset = 1
+while reset == 1:
+    # Ship creation and initial board display
+    cpu_creation(**ships_player)
+    cpu_creation(**ships_cpu)
     display_grid(**ships_player)
-    
-    
-    if missed == 0 or len(hits) > 1:
-        aim = cpu_assist(aim, guesses, hits)
-    if missed == 2 and len(hits) == 0:
-        aim = []
 
-    # Victory conditions
-    if len(ship_sunk_2) == 17:
-        print(fire)
-        print(f'{spacer*22}You sunk all the enemy ships!')
-        print(f'{player}▄'*80, fire)
-        tprint('YOU ARE VICTORIOUS', font='block-medium')
-        break
-    elif len(ship_sunk) == 17:
-        print(enemy)
-        print(f'{spacer*10}All of your ships have been destroyed. You lose this battle!')
-        print(f'{fire}▄'*80, enemy)
-        tprint('   YOU HAVE LOST', font='block-medium')
-        print(reset)
-        break
+    # Main game loop
+    for i in range(1):
+        guess = validate_guess(guesses_2)
+        guess_conversion(guess)
+
+        (guesses_2, ships_cpu,
+        hits_2, misses_2,
+        ship_sunk_2) = hit_or_miss(guess, guesses_2, hits_2, 
+                                misses_2, ship_sunk_2, **ships_cpu)
+
+        (guesses, ships_player,
+        hits, misses,
+        ship_sunk, missed) = cpu_turn(guesses, hits, misses, 
+                            ship_sunk, aim, missed, **ships_player)
+
+        display_grid(**ships_player)
+        
+        
+        if missed == 0 or len(hits) > 1:
+            aim = cpu_assist(aim, guesses, hits)
+        if missed == 2 and len(hits) == 0:
+            aim = []
+
+        # Victory conditions
+        if len(ship_sunk_2) == 17:
+            print(fire)
+            print(f'{spacer*22}You sunk all the enemy ships!')
+            print(f'{player}▄'*80, fire)
+            tprint('YOU ARE VICTORIOUS', font='block-medium')
+            break
+        elif len(ship_sunk) == 17:
+            print(enemy)
+            print(f'{spacer*10}All of your ships have been destroyed.'
+                  f'You lose this battle!')
+            print(f'{fire}▄'*80, enemy)
+            tprint('   YOU HAVE LOST', font='block-medium')
+            print(reset)
+            break
+
+    reset = ask_to_reset()
